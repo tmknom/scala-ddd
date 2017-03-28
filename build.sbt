@@ -1,11 +1,22 @@
+// アプリケーションの名前
+// リポジトリ名と合わせとくのが混乱がなくて良いと思われ
 name := """scala-ddd"""
 
+// アプリケーションのバージョン
+// 普段は書き換えることなさそう
 version := "1.0-SNAPSHOT"
 
+// ビルド定義というらしい
+// サブプロジェクトとか作るときなどに色々弄るっぽい
+// あまり知見がないので、最初は activator さんが吐き出したまま使おう
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
+// Scalaのバージョン
+// たまにはアップデートしてあげたい
 scalaVersion := "2.11.7"
 
+// 依存ライブラリ
+// 定期的にバージョンアップしたい
 libraryDependencies ++= Seq(
   // DB接続用でおなじみ
   jdbc,
