@@ -5,12 +5,14 @@ import javax.inject._
 import play.api.libs.json.Json
 import play.api.mvc._
 import play.api._
+import services.CrawlRssService
 
 @Singleton
-class CrawlRssController @Inject() extends Controller {
+class CrawlRssController @Inject() (crawlRssService: CrawlRssService) extends Controller {
 
   def create = Action {
-    Ok(Json.toJson(Map("status" -> "OK", "method" -> "post")))
+    val result = crawlRssService.perform()
+    Ok(Json.toJson(result))
   }
 
 }

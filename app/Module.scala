@@ -2,6 +2,7 @@ import com.google.inject.AbstractModule
 import java.time.Clock
 
 import services.{ApplicationTimer, AtomicCounter, Counter}
+import services.{CrawlRssService, CrawlRssServiceImpl}
 
 /**
  * This class is a Guice module that tells Guice how to bind several
@@ -23,6 +24,13 @@ class Module extends AbstractModule {
     bind(classOf[ApplicationTimer]).asEagerSingleton()
     // Set AtomicCounter as the implementation for Counter.
     bind(classOf[Counter]).to(classOf[AtomicCounter])
+
+    // とりあえずレイヤ単位でメソッドを切っておく
+    configureService()
+  }
+
+  private def configureService() = {
+    bind(classOf[CrawlRssService]).to(classOf[CrawlRssServiceImpl])
   }
 
 }
