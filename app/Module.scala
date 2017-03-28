@@ -1,6 +1,8 @@
 import com.google.inject.AbstractModule
 import java.time.Clock
 
+import domains.crawler.HatenaBookmarkAdapter
+import infrastructures.adapters.crawler.HatenaBookmarkAdapterImpl
 import services.{ApplicationTimer, AtomicCounter, Counter}
 import services.{CrawlRssService, CrawlRssServiceImpl}
 
@@ -26,11 +28,16 @@ class Module extends AbstractModule {
     bind(classOf[Counter]).to(classOf[AtomicCounter])
 
     // とりあえずレイヤ単位でメソッドを切っておく
-    configureService()
+    configureServices()
+    // infrastructures はテスト時にモックにしたいケースが多いので、さらに細かくメソッドを切っておく
+    configureAdapters()
   }
 
-  private def configureService() = {
+  private def configureServices() = {
     bind(classOf[CrawlRssService]).to(classOf[CrawlRssServiceImpl])
   }
 
+  private def configureAdapters() = {
+    bind(classOf[HatenaBookmarkAdapter]).to(classOf[HatenaBookmarkAdapterImpl])
+  }
 }
