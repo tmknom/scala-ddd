@@ -2,6 +2,10 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# 雑にRSSのクローラをコントローラで
+POST     /crawl/rss                 controllers.CrawlRssController.create
+
+# デフォルトで定義されてたヤツ
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 # An example controller showing how to use dependency injection
