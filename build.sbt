@@ -19,7 +19,17 @@ scalaVersion := "2.11.7"
 // 定期的にバージョンアップしたい
 libraryDependencies ++= Seq(
   // DB接続用でおなじみ
-  jdbc,
+  // どうやらslickを使うときは消さないといけないっぽい
+  // https://playframework.com/documentation/ja/2.4.x/PlaySlickFAQ
+  // jdbc,
+  // MySQLで接続するのに必要だぞ！
+  // なんか6.0.X系もあるけど、どっちがいいんだろう
+  "mysql" % "mysql-connector-java" % "5.1.41",
+  // O/Rマッパー
+  // https://github.com/playframework/play-slick
+  "com.typesafe.play" %% "play-slick" % "2.0.2",
+  // DBマイグレーション
+  "com.typesafe.play" %% "play-slick-evolutions" % "2.0.2",
   // play-cache ってのインポートしてるっぽい
   // キャッシュ絡みのなにかということしか分からない（何のキャッシュだよ。。）
   cache,
