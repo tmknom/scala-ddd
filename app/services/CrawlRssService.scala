@@ -5,6 +5,8 @@ import javax.inject.{Inject, Singleton}
 import domains.article.{ArticleEntity, ArticleRepository}
 import domains.crawler.HatenaBookmarkAdapter
 
+import scala.concurrent.ExecutionContext.Implicits.global
+
 trait CrawlRssService {
   def perform(): List[ArticleEntity]
 }
@@ -15,8 +17,15 @@ class CrawlRssServiceImpl @Inject() (hatenaBookmarkAdapter: HatenaBookmarkAdapte
     val articleEntities = hatenaBookmarkAdapter.crawl()
     for (articleEntity <- articleEntities){
       articleRepository.insert(articleEntity)
-      println(articleEntity.title + " : " + articleEntity.url)
+//      println(articleEntity.title + " : " + articleEntity.url)
     }
+
+    articleRepository.listAll().map{
+      selectedArticleEntities => for (articleEntity <- selectedArticleEntities) {
+        println("hoge: " + articleEntity.title + " : " + articleEntity.url)
+      }
+    }
+
     articleEntities
   }
 }

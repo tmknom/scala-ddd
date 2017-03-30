@@ -14,7 +14,7 @@ class ArticleRepositoryImpl @Inject()(protected val dbConfigProvider: DatabaseCo
 
   private val Articles = TableQuery[ArticlesTable]
 
-//  override def listAll(): Future[Seq[ArticleEntity]] = db.run(Articles.result)
+  override def listAll(): Future[Seq[ArticleEntity]] = db.run(Articles.result)
 
   override def insert(articleEntity: ArticleEntity): Future[Unit] = db.run(Articles += articleEntity).map { _ => () }
 
