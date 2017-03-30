@@ -2,8 +2,10 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# 記事表示系
+GET /articles controllers.ArticleController.index
 # 雑にRSSのクローラをコントローラで
-POST     /crawl/rss                 controllers.CrawlRssController.create
+POST /crawl/rss controllers.CrawlRssController.create
 
 # デフォルトで定義されてたヤツ
 # An example controller showing a sample home page
