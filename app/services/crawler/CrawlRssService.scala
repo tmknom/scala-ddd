@@ -1,11 +1,9 @@
-package services
+package services.crawler
 
 import javax.inject.{Inject, Singleton}
 
 import domains.article.{ArticleEntity, ArticleRepository}
 import domains.crawler.HatenaBookmarkAdapter
-
-import scala.concurrent.ExecutionContext.Implicits.global
 
 trait CrawlRssService {
   def perform(): List[ArticleEntity]
