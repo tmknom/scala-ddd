@@ -3,7 +3,7 @@
 # ~~~~
 
 # 記事表示系
-GET /articles controllers.ArticleController.index
+GET /articles controllers.article.ArticleController.index
 # 雑にRSSのクローラをコントローラで
 POST /crawl/rss controllers.CrawlRssController.create
 

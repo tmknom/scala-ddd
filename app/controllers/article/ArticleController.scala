@@ -1,4 +1,4 @@
-package controllers
+package controllers.article
 
 import javax.inject._
 
