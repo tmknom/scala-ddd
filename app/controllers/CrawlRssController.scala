@@ -4,7 +4,7 @@ import javax.inject._
 
 import play.api.libs.json.Json
 import play.api.mvc._
-import services.CrawlRssService
+import services.crawler.CrawlRssService
 
 @Singleton
 class CrawlRssController @Inject() (crawlRssService: CrawlRssService) extends Controller {

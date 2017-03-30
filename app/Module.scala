@@ -1,13 +1,13 @@
-import com.google.inject.AbstractModule
 import java.time.Clock
 
+import com.google.inject.AbstractModule
 import domains.article.ArticleRepository
 import domains.crawler.HatenaBookmarkAdapter
 import infrastructures.adapters.crawler.HatenaBookmarkAdapterImpl
 import infrastructures.repositories.article.ArticleRepositoryImpl
 import services.article.{ArticleService, ArticleServiceImpl}
+import services.crawler.{CrawlRssService, CrawlRssServiceImpl}
 import services.{ApplicationTimer, AtomicCounter, Counter}
-import services.{CrawlRssService, CrawlRssServiceImpl}
 
 /**
  * This class is a Guice module that tells Guice how to bind several
