@@ -17,15 +17,7 @@ class CrawlRssServiceImpl @Inject() (hatenaBookmarkAdapter: HatenaBookmarkAdapte
     val articleEntities = hatenaBookmarkAdapter.crawl()
     for (articleEntity <- articleEntities){
       articleRepository.insert(articleEntity)
-//      println(articleEntity.title + " : " + articleEntity.url)
     }
-
-    articleRepository.listAll().map{
-      selectedArticleEntities => for (articleEntity <- selectedArticleEntities) {
-        println("hoge: " + articleEntity.title + " : " + articleEntity.url)
-      }
-    }
-
     articleEntities
   }
 }
