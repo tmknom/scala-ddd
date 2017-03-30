@@ -1,5 +1,7 @@
 package domains.crawler
 
+import domains.article.ArticleEntity
+
 trait HatenaBookmarkAdapter {
-  def crawl(): Unit
+  def crawl(): List[ArticleEntity]
 }
