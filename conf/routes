@@ -5,7 +5,7 @@
 # 記事表示系
 GET /articles controllers.article.ArticleController.index
 # 雑にRSSのクローラをコントローラで
-POST /crawl/rss controllers.CrawlRssController.create
+POST /crawl/rss controllers.crawler.CrawlRssController.create
 
 # デフォルトで定義されてたヤツ
 # An example controller showing a sample home page
