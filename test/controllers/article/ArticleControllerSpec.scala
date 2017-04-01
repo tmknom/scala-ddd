@@ -14,29 +14,46 @@ import scala.concurrent.Future
 
 class ArticleControllerSpec extends ControllerSpec {
   "index" when {
-    "Some object" should {
+    // http://www.innovaedge.com/2015/07/01/how-to-use-mocks-in-injected-objects-with-guiceplayscala/
+    "Empty object" should {
       // モックの作成
-      val mockApp = MockBuilder.build()
-
+      val mockApp = MockBuilder.build(MockBuilder.empty)
+      // テスト実行
       "success" in {
         val json = route(mockApp, FakeRequest(GET, "/articles")).get
+
+        status(json) mustBe OK
+        contentAsString(json) mustBe "\"empty\""
+      }
+    }
+
+    "Some object" should {
+      // モックの作成
+      val mockApp = MockBuilder.build(MockBuilder.some)
+      // テスト実行
+      "success" in {
+        val json = route(mockApp, FakeRequest(GET, "/articles")).get
+
+        status(json) mustBe OK
         contentAsString(json) mustBe "\"sample_title\"" // """sample_title"""
       }
     }
   }
 
   private object MockBuilder {
-    def build(): Application = {
+    val empty = Seq.empty[Future[ArticleEntity]]
+    val some = Seq(Future {
+      ArticleEntity(None, "sample_title", "sample_url")
+    })
+
+    def build(articleEntities: Seq[Future[ArticleEntity]]): Application = {
       new GuiceApplicationBuilder().
-        overrides(bind[ArticleRepository].toInstance(articleRepository())).
+        overrides(bind[ArticleRepository].toInstance(articleRepository(articleEntities))).
         build
     }
 
-    private def articleRepository(): ArticleRepository = {
+    private def articleRepository(articleEntities: Seq[Future[ArticleEntity]]): ArticleRepository = {
       // Mockが返す値を作成
-      val articleEntities: Seq[Future[ArticleEntity]] = Seq(Future {
-        ArticleEntity(None, "sample_title", "sample_url")
-      })
       val articleVector: Future[Seq[ArticleEntity]] = Future.sequence(articleEntities)
 
       // Mockが返す値をセット
@@ -45,15 +62,4 @@ class ArticleControllerSpec extends ControllerSpec {
       articleRepository
     }
   }
-
-//  def createApplicationMock[T <: AnyRef: ClassTag](mock: T): Application = {
-//    // ClassTag については下記参照
-//    // http://www.ne.jp/asahi/hishidama/home/tech/scala/classtag.html
-//    //
-//    // 魔法感半端ないので、プロダクトコードではあまり使わないほうがいい気がする
-//    // ジェネリクスのtype erasureについて知らないと意味不明だし。。
-//    new GuiceApplicationBuilder().
-//      overrides(bind[T].toInstance(mock)).
-//      build
-//  }
 }
