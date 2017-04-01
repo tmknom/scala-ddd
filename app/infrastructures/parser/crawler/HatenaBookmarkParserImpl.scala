@@ -2,7 +2,6 @@ package infrastructures.parser.crawler
 
 import javax.inject.Singleton
 
-import dispatch._
 import domains.article.ArticleEntity
 import domains.crawler.HatenaBookmarkParser
 
@@ -12,9 +11,9 @@ import scala.xml.{NodeSeq, XML}
 @Singleton
 class HatenaBookmarkParserImpl extends HatenaBookmarkParser {
 
-  override def parse(rss: Future[String]): List[ArticleEntity] = {
+  override def parse(rss: String): List[ArticleEntity] = {
     var result = ListBuffer.empty[ArticleEntity]
-    for (item <- items(rss.apply())) {
+    for (item <- items(rss)) {
       val title = (item \ "title").text
       val url = (item \ "link").text
 
