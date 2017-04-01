@@ -2,11 +2,10 @@ import java.time.Clock
 
 import com.google.inject.AbstractModule
 import domains.article.ArticleRepository
-import domains.crawler.{HatenaBookmarkAdapter, HatenaBookmarkApi, HatenaBookmarkParser}
-import infrastructures.adapters.crawler.HatenaBookmarkAdapterImpl
+import domains.crawler._
 import infrastructures.api.crawler.HatenaBookmarkApiImpl
-import infrastructures.repositories.article.ArticleRepositoryImpl
 import infrastructures.parser.crawler.HatenaBookmarkParserImpl
+import infrastructures.repositories.article.ArticleRepositoryImpl
 import services.article.{ArticleService, ArticleServiceImpl}
 import services.crawler.{CrawlRssService, CrawlRssServiceImpl}
 import services.{ApplicationTimer, AtomicCounter, Counter}
@@ -36,7 +35,6 @@ class Module extends AbstractModule {
     configureServices()
     // infrastructures はテスト時にモックにしたいケースが多いので、さらに細かくメソッドを切っておく
     configureRepositories()
-    configureAdapters()
     configureApi()
     configureParser()
   }
@@ -48,10 +46,6 @@ class Module extends AbstractModule {
 
   private def configureRepositories() = {
     bind(classOf[ArticleRepository]).to(classOf[ArticleRepositoryImpl])
-  }
-
-  private def configureAdapters() = {
-    bind(classOf[HatenaBookmarkAdapter]).to(classOf[HatenaBookmarkAdapterImpl])
   }
 
   private def configureApi() = {
