@@ -6,8 +6,8 @@ import domains.crawler._
 import infrastructures.api.crawler.HatenaBookmarkApiImpl
 import infrastructures.parser.crawler.HatenaBookmarkParserImpl
 import infrastructures.repositories.article.ArticleRepositoryImpl
-import services.article.{ArticleService, ArticleServiceImpl}
-import services.crawler.{CrawlRssService, CrawlRssServiceImpl}
+import services.article._
+import services.crawler._
 import services.{ApplicationTimer, AtomicCounter, Counter}
 
 /**
@@ -40,7 +40,7 @@ class Module extends AbstractModule {
   }
 
   private def configureServices() = {
-    bind(classOf[CrawlRssService]).to(classOf[CrawlRssServiceImpl])
+    bind(classOf[HatenaBookmarkService]).to(classOf[HatenaBookmarkServiceImpl])
     bind(classOf[ArticleService]).to(classOf[ArticleServiceImpl])
   }
 

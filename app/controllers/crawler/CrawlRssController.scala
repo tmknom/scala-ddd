@@ -4,13 +4,13 @@ import javax.inject._
 
 import play.api.libs.json.Json
 import play.api.mvc._
-import services.crawler.CrawlRssService
+import services.crawler.HatenaBookmarkService
 
 @Singleton
-class CrawlRssController @Inject() (crawlRssService: CrawlRssService) extends Controller {
+class CrawlRssController @Inject() (hatenaBookmarkService: HatenaBookmarkService) extends Controller {
 
   def create = Action {
-    val articleEntities = crawlRssService.perform()
+    val articleEntities = hatenaBookmarkService.crawl()
     println(articleEntities.size)
 
     val result = Map("status" -> "OK", "method" -> "post")
