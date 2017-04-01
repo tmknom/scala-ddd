@@ -42,6 +42,12 @@ libraryDependencies ++= Seq(
   "net.databinder.dispatch" %% "dispatch-core" % "0.11.2",
 
   // ちゃんと調べてないけど、こっから下はテスト用だと思われる
+  //
+  // モック用ライブラリ
+  // DBアクセスやネットワークアクセスを差し替えたい時に使う
+  "org.mockito" % "mockito-core" % "2.7.20" % Test,
+  // xUnit用ライブラリ
+  // playの標準テストライブラリなので、そのまま採用する
   "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 )
 
