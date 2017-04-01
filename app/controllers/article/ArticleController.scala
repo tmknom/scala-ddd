@@ -18,7 +18,12 @@ class ArticleController @Inject()(articleService: ArticleService) extends Contro
         for (articleEntity <- articleEntities) {
           println("hoge: " + articleEntity.title + " : " + articleEntity.url)
         }
-        Ok(Json.toJson(articleEntities.head.title))
+
+        if (articleEntities.nonEmpty) {
+          Ok(Json.toJson(articleEntities.head.title))
+        }else{
+          Ok(Json.toJson("empty"))
+        }
       }
     }
   }
