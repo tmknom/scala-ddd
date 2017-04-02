@@ -1,4 +1,4 @@
-package infrastructures.api.crawler
+package infrastructures.crawler
 
 import javax.inject.Singleton
 

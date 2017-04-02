@@ -1,4 +1,4 @@
-package infrastructures.parser.crawler
+package infrastructures.crawler
 
 import javax.inject.Singleton
 

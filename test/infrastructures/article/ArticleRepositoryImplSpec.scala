@@ -1,4 +1,4 @@
-package infrastructures.repositories.article
+package infrastructures.article
 
 import base.scalatest.DatabaseSpec
 import domains.article.{ArticleEntity, ArticleRepository}

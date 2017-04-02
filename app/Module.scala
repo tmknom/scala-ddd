@@ -1,11 +1,10 @@
 import java.time.Clock
 
 import com.google.inject.AbstractModule
-import domains.article.ArticleRepository
+import domains.article._
 import domains.crawler._
-import infrastructures.api.crawler.HatenaBookmarkApiImpl
-import infrastructures.parser.crawler.HatenaBookmarkParserImpl
-import infrastructures.repositories.article.ArticleRepositoryImpl
+import infrastructures.article._
+import infrastructures.crawler._
 import services.article._
 import services.crawler._
 import services.{ApplicationTimer, AtomicCounter, Counter}
@@ -33,10 +32,7 @@ class Module extends AbstractModule {
 
     // とりあえずレイヤ単位でメソッドを切っておく
     configureServices()
-    // infrastructures はテスト時にモックにしたいケースが多いので、さらに細かくメソッドを切っておく
-    configureRepositories()
-    configureApi()
-    configureParser()
+    configureInfrastructures()
   }
 
   private def configureServices() = {
@@ -44,15 +40,9 @@ class Module extends AbstractModule {
     bind(classOf[ArticleService]).to(classOf[ArticleServiceImpl])
   }
 
-  private def configureRepositories() = {
+  private def configureInfrastructures() = {
     bind(classOf[ArticleRepository]).to(classOf[ArticleRepositoryImpl])
-  }
-
-  private def configureApi() = {
     bind(classOf[HatenaBookmarkApi]).to(classOf[HatenaBookmarkApiImpl])
-  }
-
-  private def configureParser() = {
     bind(classOf[HatenaBookmarkParser]).to(classOf[HatenaBookmarkParserImpl])
   }
 }
