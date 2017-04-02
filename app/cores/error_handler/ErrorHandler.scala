@@ -1,15 +1,17 @@
-import java.util.UUID
-import javax.inject._
+package cores.error_handler
 
-import play.api._
+import java.util.UUID
+import javax.inject.{Inject, Provider, Singleton}
+
 import play.api.http.DefaultHttpErrorHandler
 import play.api.http.Status.INTERNAL_SERVER_ERROR
-import play.api.libs.json.{JsObject, Json}
-import play.api.mvc.Results._
-import play.api.mvc._
+import play.api.mvc.{RequestHeader, Result}
 import play.api.routing.Router
+import play.api._
+import play.api.libs.json.{JsObject, Json}
+import play.api.mvc.Results.InternalServerError
 
-import scala.concurrent._
+import scala.concurrent.Future
 
 /**
   * エラーハンドラー
