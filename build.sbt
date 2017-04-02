@@ -58,3 +58,18 @@ libraryDependencies ++= Seq(
   "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 )
 
+// コンパイル時にドキュメントを含めない
+// こうすると、コンパイルがちょっと高速になるかもしれない
+// https://www.playframework.com/documentation/2.5.x/SBTCookbook#Disable-documentation
+sources in (Compile, doc) := Seq.empty
+
+// Artifact作成時にドキュメントを含めない
+// こうすると、Artifact作成がちょっと高速になるかもしれない
+//
+// http://www.scala-sbt.org/0.13/docs/Artifacts.html
+// disable publishing the main jar produced by `package`
+publishArtifact in (Compile, packageBin) := false
+// disable publishing the main API jar
+publishArtifact in (Compile, packageDoc) := false
+// disable publishing the main sources jar
+publishArtifact in (Compile, packageSrc) := false
