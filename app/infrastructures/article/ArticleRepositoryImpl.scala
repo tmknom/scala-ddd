@@ -1,13 +1,13 @@
-package infrastructures.repositories.article
+package infrastructures.article
 
-import scala.concurrent.Future
 import javax.inject.Inject
 
 import domains.article.{ArticleEntity, ArticleRepository}
-import play.api.db.slick.DatabaseConfigProvider
-import play.api.db.slick.HasDatabaseConfigProvider
+import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import slick.driver.JdbcProfile
+
+import scala.concurrent.Future
 
 class ArticleRepositoryImpl @Inject()(protected val dbConfigProvider: DatabaseConfigProvider) extends HasDatabaseConfigProvider[JdbcProfile] with ArticleRepository {
   import driver.api._
