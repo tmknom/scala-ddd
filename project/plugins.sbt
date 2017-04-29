@@ -19,3 +19,10 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.10")
 //addSbtPlugin("com.typesafe.sbt" % "sbt-mocha" % "1.1.0")
 //
 //addSbtPlugin("org.irundaia.sbt" % "sbt-sassify" % "1.4.6")
+
+/**
+  * 静的解析ツール
+  *
+  * @see http://www.scalastyle.org/sbt.html
+  */
+addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.8.0")
