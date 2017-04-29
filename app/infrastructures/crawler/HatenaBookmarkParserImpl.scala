@@ -5,22 +5,17 @@ import javax.inject.Singleton
 import domains.article.ArticleEntity
 import domains.crawler.HatenaBookmarkParser
 
-import scala.collection.mutable.ListBuffer
 import scala.xml.{NodeSeq, XML}
 
 @Singleton
 class HatenaBookmarkParserImpl extends HatenaBookmarkParser {
 
-  override def parse(rss: String): List[ArticleEntity] = {
-    var result = ListBuffer.empty[ArticleEntity]
-    for (item <- items(rss)) {
+  override def parse(rss: String): Seq[ArticleEntity] = {
+    items(rss).map(item => {
       val title = (item \ "title").text
       val url = (item \ "link").text
-
-      val articleEntity = ArticleEntity(None, title, url)
-      result += articleEntity
-    }
-    result.toList
+      ArticleEntity(None, title, url)
+    })
   }
 
   private def items(string: String): NodeSeq = {

@@ -7,7 +7,7 @@ import domains.article.{ArticleEntity, ArticleRepository}
 import domains.crawler.{HatenaBookmarkApi, HatenaBookmarkParser}
 
 trait HatenaBookmarkService {
-  def crawl(): List[ArticleEntity]
+  def crawl(): Seq[ArticleEntity]
 }
 
 @Singleton
@@ -16,7 +16,7 @@ class HatenaBookmarkServiceImpl @Inject()(
                                            hatenaBookmarkParser: HatenaBookmarkParser,
                                            articleRepository: ArticleRepository) extends HatenaBookmarkService {
 
-  override def crawl(): List[ArticleEntity] = {
+  override def crawl(): Seq[ArticleEntity] = {
     val response = hatenaBookmarkApi.request()
     val articleEntities = hatenaBookmarkParser.parse(response.apply())
     for (articleEntity <- articleEntities){
