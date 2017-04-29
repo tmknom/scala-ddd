@@ -9,7 +9,7 @@ import services.crawler.HatenaBookmarkService
 @Singleton
 class CrawlRssController @Inject() (hatenaBookmarkService: HatenaBookmarkService) extends Controller {
 
-  def create = Action {
+  def create: Action[AnyContent] = Action {
     val articleEntities = hatenaBookmarkService.crawl()
     println(articleEntities.size)
 

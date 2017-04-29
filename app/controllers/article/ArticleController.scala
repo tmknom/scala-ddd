@@ -11,7 +11,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 @Singleton
 class ArticleController @Inject()(articleService: ArticleService) extends Controller {
 
-  def index = Action.async {
+  def index: Action[AnyContent] = Action.async {
     val future = articleService.listAll()
     future.map {
       articleEntities => {
