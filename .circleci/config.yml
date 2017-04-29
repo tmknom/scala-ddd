@@ -16,6 +16,11 @@ jobs:
     working_directory: /var/opt/app
     steps:
       - checkout
+      - restore_cache:
+          name: Restoring cache - ivy2
+          keys:
+            - ivy2-{{ checksum "build.sbt" }}
+            - ivy2-
       - run:
           # MySQLの起動チェック
           # テスト時にMySQLコンテナの起動が間に合わないことがあるため、接続できるようになるまで待つ
@@ -36,3 +41,8 @@ jobs:
       - run:
           name: Test
           command: activator "test"
+      - save_cache:
+          name: Saving cache - ivy2
+          key: ivy2-{{ checksum "build.sbt" }}
+          paths:
+            - "~/.ivy2"
