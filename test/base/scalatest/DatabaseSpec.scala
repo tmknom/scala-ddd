@@ -33,7 +33,7 @@ trait DatabaseSpec extends PlaySpec with OneAppPerSuite with BeforeAndAfterEach 
     * 更新系のテストをするときは、テストケースごとに毎回DBをクリーンにしたほうが良いが、
     * 参照系のテストの場合は、Specクラス単位でセットアップしたほうが良いかもしれない。
     */
-  override def beforeEach() = {
+  override def beforeEach(): Unit = {
     Evolutions.applyEvolutions(databaseApi.database("default"))
 
     // BeforeAndAfterEachの定義を読むとこのコードは必須な模様。
@@ -45,7 +45,7 @@ trait DatabaseSpec extends PlaySpec with OneAppPerSuite with BeforeAndAfterEach 
   /**
     * テスト実行後に、cleanupマイグレーションを実行し、DBをクリア
     */
-  override def afterEach() = {
+  override def afterEach(): Unit = {
     try {
       // beforeEachメソッドの構文同様、BeforeAndAfterEachの定義を読むと推奨されてるっぽい書き方。
       // afterEachメソッドでは、リソースの開放処理などが行われることが多いので
