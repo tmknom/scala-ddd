@@ -12,6 +12,19 @@ import play.api.test._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
+/**
+  * OptionPartial を抑制する理由
+  *
+  * 抑制しない場合「Option#get is disabled - use Option#fold instead」という警告が出る。
+  * プロダクトコードでは確かに、Option 型で get メソッドを使わず、fold メソッドを使うというのは良い習慣に思える。
+  *
+  * 一方で、コントローラのテストでは route(app, FakeRequest(GET, "/any/url")).get というイディオムがよく出てくる。
+  * コントローラのテストでは、fold メソッドなどを使うと逆にテストの見通しが悪くなるように見える。
+  *
+  * よって、コントローラのテストでは明示的に OptionPartial を抑制することにした。
+  * できれば、コントローラのテストだけ OptionPartial を勝手に抑制するようにしたい。
+  */
+@SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 class ArticleControllerSpec extends ControllerSpec {
   "index" when {
     // http://www.innovaedge.com/2015/07/01/how-to-use-mocks-in-injected-objects-with-guiceplayscala/
