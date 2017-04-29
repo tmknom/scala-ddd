@@ -11,7 +11,11 @@ trait HatenaBookmarkService {
 }
 
 @Singleton
-class HatenaBookmarkServiceImpl @Inject()(hatenaBookmarkApi: HatenaBookmarkApi, hatenaBookmarkParser: HatenaBookmarkParser, articleRepository: ArticleRepository) extends HatenaBookmarkService {
+class HatenaBookmarkServiceImpl @Inject()(
+                                           hatenaBookmarkApi: HatenaBookmarkApi,
+                                           hatenaBookmarkParser: HatenaBookmarkParser,
+                                           articleRepository: ArticleRepository) extends HatenaBookmarkService {
+
   override def crawl(): List[ArticleEntity] = {
     val response = hatenaBookmarkApi.request()
     val articleEntities = hatenaBookmarkParser.parse(response.apply())
