@@ -75,6 +75,16 @@ publishArtifact in (Compile, packageDoc) := false
 publishArtifact in (Compile, packageSrc) := false
 
 /**
+  * Scalastyleでテストコード側もデフォルトでチェックするよう設定
+  *
+  * テストコードもプロダクトコード同様の品質にすべきである。
+  *
+  * 標準ではテストコードをチェックする場合 activator test:scalastyle を叩くことになるが、
+  * この設定を入れることで activator scalastyle を叩いたときも、テストコードをチェックしてくれる。
+  */
+scalastyleSources in Compile <++= sourceDirectories in Test
+
+/**
   * テスト時もついでに Scalastyle を実行するよう設定
   *
   * activator scalastyle コマンドを実行した場合は compile 用の設定が読み込まれる。
