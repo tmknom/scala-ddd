@@ -97,6 +97,13 @@ testScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Compile).toT
 /**
   * WartRemover の設定
   *
+  * - 警告の除外ファイル
+  *   - routes : ルーティング設定は事実上のDSLなのでチェックしない
+  *
   * @see http://www.wartremover.org/doc/install-setup.html
   */
 wartremoverWarnings ++= Warts.all
+// 本当は右記のように書こうとした => wartremoverExcluded += baseDirectory.value / "conf" / "routes"
+// が、除外してくれなかったので、このような書き方に落ち着いた。たぶん、conf配下のファイルは扱いが特殊なんだろう。
+// http://stackoverflow.com/questions/34788530/wartremover-still-reports-warts-in-excluded-play-routes-file
+wartremoverExcluded ++= routes.in(Compile).value
