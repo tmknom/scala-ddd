@@ -65,6 +65,8 @@ class ArticleControllerSpec extends ControllerSpec {
         build
     }
 
+    // よく分からんが警告が出る。。
+    @SuppressWarnings(Array("org.wartremover.warts.NonUnitStatements"))
     private def articleRepository(articleEntities: Seq[Future[ArticleEntity]]): ArticleRepository = {
       // Mockが返す値を作成
       val articleVector: Future[Seq[ArticleEntity]] = Future.sequence(articleEntities)
