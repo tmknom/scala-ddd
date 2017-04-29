@@ -9,7 +9,9 @@ import slick.driver.JdbcProfile
 
 import scala.concurrent.Future
 
-class ArticleRepositoryImpl @Inject()(protected val dbConfigProvider: DatabaseConfigProvider) extends HasDatabaseConfigProvider[JdbcProfile] with ArticleRepository {
+class ArticleRepositoryImpl @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
+  extends HasDatabaseConfigProvider[JdbcProfile] with ArticleRepository {
+
   import driver.api._
 
   private val Articles = TableQuery[ArticlesTable]
@@ -18,6 +20,7 @@ class ArticleRepositoryImpl @Inject()(protected val dbConfigProvider: DatabaseCo
 
   override def insert(articleEntity: ArticleEntity): Future[Unit] = db.run(Articles += articleEntity).map { _ => () }
 
+  // scalastyle:off
   private class ArticlesTable(tag: Tag) extends Table[ArticleEntity](tag, "articles") {
     def id = column[Int]("id", O.PrimaryKey)
     def title = column[String]("title")
@@ -25,4 +28,5 @@ class ArticleRepositoryImpl @Inject()(protected val dbConfigProvider: DatabaseCo
 
     def * = (id.?, title, url) <> (ArticleEntity.tupled, ArticleEntity.unapply _)
   }
+  // scalastyle:on
 }

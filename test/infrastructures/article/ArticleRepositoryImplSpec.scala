@@ -26,7 +26,7 @@ class ArticleRepositoryImplSpec extends DatabaseSpec with ScalaFutures {
           actual must have size 1
 
           // Entityの属性をチェック
-          actual.head.id must not be null
+          actual.head.id must not be null // scalastyle:ignore
           actual.head.title mustBe articleEntity.title
           actual.head.url mustBe articleEntity.url
 
