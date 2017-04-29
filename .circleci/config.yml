@@ -21,6 +21,16 @@ jobs:
           keys:
             - ivy2-{{ checksum "build.sbt" }}
             - ivy2-
+      - restore_cache:
+          name: Restoring cache - target
+          keys:
+            - target-{{ checksum "build.sbt" }}
+            - target-
+      - restore_cache:
+          name: Restoring cache - project/target
+          keys:
+            - project-{{ checksum "build.sbt" }}
+            - project-
       - run:
           # MySQLの起動チェック
           # テスト時にMySQLコンテナの起動が間に合わないことがあるため、接続できるようになるまで待つ
@@ -46,3 +56,13 @@ jobs:
           key: ivy2-{{ checksum "build.sbt" }}
           paths:
             - "~/.ivy2"
+      - save_cache:
+          name: Saving cache - target
+          key: target-{{ checksum "build.sbt" }}
+          paths:
+            - "target"
+      - save_cache:
+          name: Saving cache - project/target
+          key: project-{{ checksum "build.sbt" }}
+          paths:
+            - "project/target"
