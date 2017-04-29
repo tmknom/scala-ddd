@@ -1,4 +1,4 @@
-package base.scalatest.utility
+package cores.test.fixture
 
 import scala.io.Source
 

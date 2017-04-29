@@ -1,4 +1,4 @@
-package base
+package cores.test
 
 /**
   * テスト用の共通モジュールが定義されるパッケージ

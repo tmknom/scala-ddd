@@ -1,6 +1,6 @@
 package controllers.article
 
-import base.scalatest.ControllerSpec
+import cores.test.scalatest.ControllerSpec
 import domains.article.{ArticleEntity, ArticleRepository}
 import org.mockito.Mockito._
 import play.api.Application

@@ -1,6 +1,6 @@
 package infrastructures.crawler
 
-import base.scalatest.utility.FixtureLoader
+import cores.test.fixture.FixtureLoader
 import fixtures.FixturePath
 import org.scalatestplus.play.PlaySpec
 

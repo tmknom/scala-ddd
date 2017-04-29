@@ -1,6 +1,6 @@
 package services.crawler
 
-import base.scalatest.utility.FixtureLoader
+import cores.test.fixture.FixtureLoader
 import domains.article.{ArticleEntity, ArticleRepository}
 import domains.crawler.HatenaBookmarkApi
 import fixtures.FixturePath

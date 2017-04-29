@@ -1,10 +1,9 @@
-package base.scalatest
+package cores.test.scalatest
 
 import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.play.{OneAppPerSuite, PlaySpec}
 import play.api.db.DBApi
 import play.api.db.evolutions.Evolutions
-import play.api.inject.guice.GuiceApplicationBuilder
 
 /**
   * データベースとの結合テスト用trait
