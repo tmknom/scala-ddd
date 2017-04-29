@@ -4,8 +4,9 @@ import base.scalatest.utility.FixtureLoader
 import fixtures.FixturePath
 import org.scalatestplus.play.PlaySpec
 
+@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 class HatenaBookmarkParserImplSpec extends PlaySpec {
-  val sut = new HatenaBookmarkParserImpl()
+  private val sut = new HatenaBookmarkParserImpl()
 
   "parse" should {
     "success" in {

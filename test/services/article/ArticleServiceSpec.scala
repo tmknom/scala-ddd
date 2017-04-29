@@ -31,6 +31,7 @@ class ArticleServiceSpec extends PlaySpec with MockitoSugar with ScalaFutures {
         build
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.NonUnitStatements"))
     private def articleRepository(): ArticleRepository = {
       // Mockが返す値を作成
       val articleVector: Future[Seq[ArticleEntity]] = Future.sequence(Seq(Future {

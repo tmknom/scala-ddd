@@ -59,5 +59,5 @@ trait DatabaseSpec extends PlaySpec with OneAppPerSuite with BeforeAndAfterEach 
   /**
     * ここから下は、Google Guiceのinjectionをテスト内で実行するためのおまじない
     */
-  lazy val databaseApi = app.injector.instanceOf[DBApi] //here is the important line
+  private lazy val databaseApi: DBApi = app.injector.instanceOf[DBApi] //here is the important line
 }
