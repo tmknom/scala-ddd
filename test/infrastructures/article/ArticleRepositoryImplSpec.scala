@@ -5,6 +5,7 @@ import domains.article.{ArticleEntity, ArticleRepository}
 import org.scalatest.concurrent.ScalaFutures
 import play.api.Application
 
+@SuppressWarnings(Array("org.wartremover.warts.ImplicitParameter", "org.wartremover.warts.Null", "org.wartremover.warts.TraversableOps"))
 class ArticleRepositoryImplSpec extends DatabaseSpec with ScalaFutures {
   def articleRepository(implicit app: Application): ArticleRepository = Application.instanceCache[ArticleRepositoryImpl].apply(app)
 
