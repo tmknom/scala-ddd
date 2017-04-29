@@ -58,11 +58,23 @@ object DateTimeProvider {
     * テスト用のクロックを使用
     *
     * テストコードからのみ呼び出されることを想定している。
+    * システムのデフォルトタイムゾーンを使用する。
+    *
+    * @param localDateTime 固定する現在日時
+    */
+  def useFixedClockForTest(localDateTime: LocalDateTime): Unit = {
+    useFixedClockForTest(localDateTime, DEFAULT_ZONE_ID)
+  }
+
+  /**
+    * テスト用のクロックを使用
+    *
+    * テストコードからのみ呼び出されることを想定している。
     *
     * @param localDateTime 固定する現在日時
     * @param zoneId タイムゾーンID（省略時はシステムのデフォルトタイムゾーンを使用）
     */
-  def useFixedClockForTest(localDateTime: LocalDateTime, zoneId: ZoneId = DEFAULT_ZONE_ID): Unit = {
+  def useFixedClockForTest(localDateTime: LocalDateTime, zoneId: ZoneId): Unit = {
     clock = Clock.fixed(ZonedDateTime.of(localDateTime, zoneId).toInstant, zoneId)
   }
 
