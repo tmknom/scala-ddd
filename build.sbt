@@ -93,3 +93,10 @@ scalastyleSources in Compile <++= sourceDirectories in Test
 lazy val testScalastyle = taskKey[Unit]("testScalastyle")
 testScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Compile).toTask("").value
 (test in Test) <<= (test in Test) dependsOn testScalastyle
+
+/**
+  * WartRemover の設定
+  *
+  * @see http://www.wartremover.org/doc/install-setup.html
+  */
+wartremoverWarnings ++= Warts.all
