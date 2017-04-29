@@ -16,7 +16,7 @@ class ArticleController @Inject()(articleService: ArticleService) extends Contro
     future.map {
       articleEntities => {
         for (articleEntity <- articleEntities) {
-          println("hoge: " + articleEntity.title + " : " + articleEntity.url)
+          println("hoge: " + articleEntity.title + " : " + articleEntity.url) // scalastyle:ignore
         }
 
         if (articleEntities.nonEmpty) {
