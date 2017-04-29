@@ -5,6 +5,9 @@ jobs:
       # https://github.com/tmknom/docker-play-framework
       - image: tmknom/play-framework
         environment:
+          DB_URL: "jdbc:mysql://127.0.0.1/db_test?characterEncoding=UTF8&connectionCollation=utf8mb4_bin&useSSL=false"
+          DB_USER: "root"
+          DB_PASSWORD: ""
           # タイムゾーンは本番環境に合わせる
           TZ: "/usr/share/zoneinfo/Asia/Tokyo"
           # MySQLの起動チェック用
@@ -48,11 +51,7 @@ jobs:
             done
       - run:
           name: Create test database
-          command: |
-            mysql -u root -h 127.0.0.1 -e 'GRANT ALL ON *.* TO db_user IDENTIFIED BY "db_password";'
-            mysql -u root -h 127.0.0.1 -e 'FLUSH PRIVILEGES;'
-            mysql -u root -h 127.0.0.1 -e 'create database db_production character set utf8mb4;'
-            mysql -u root -h 127.0.0.1 -e 'create database db_test character set utf8mb4;'
+          command: mysql -u root -h 127.0.0.1 -e 'create database db_test character set utf8mb4;'
       - run:
           name: Test
           command: activator "test"
