@@ -9,9 +9,6 @@ import play.api.inject.guice._
 import play.api.test.Helpers._
 import play.api.test._
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-
 class ArticleControllerSpec extends ControllerSpec {
   "index" when {
     // http://www.innovaedge.com/2015/07/01/how-to-use-mocks-in-injected-objects-with-guiceplayscala/
@@ -41,12 +38,10 @@ class ArticleControllerSpec extends ControllerSpec {
   }
 
   private object MockBuilder {
-    val empty = Seq.empty[Future[ArticleEntity]]
-    val some = Seq(Future {
-      ArticleEntity(None, "sample_title", "sample_url")
-    })
+    val empty = Seq.empty[ArticleEntity]
+    val some = Seq(ArticleEntity(None, "sample_title", "sample_url"))
 
-    def build(articleEntities: Seq[Future[ArticleEntity]]): Application = {
+    def build(articleEntities: Seq[ArticleEntity]): Application = {
       new GuiceApplicationBuilder().
         overrides(bind[ArticleRepository].toInstance(articleRepository(articleEntities))).
         build
@@ -54,14 +49,12 @@ class ArticleControllerSpec extends ControllerSpec {
 
     // よく分からんが警告が出る。。
     @SuppressWarnings(Array("org.wartremover.warts.NonUnitStatements"))
-    private def articleRepository(articleEntities: Seq[Future[ArticleEntity]]): ArticleRepository = {
-      // Mockが返す値を作成
-      val articleVector: Future[Seq[ArticleEntity]] = Future.sequence(articleEntities)
-
+    private def articleRepository(articleEntities: Seq[ArticleEntity]): ArticleRepository = {
       // Mockが返す値をセット
       val articleRepository = mock[ArticleRepository]
-      when(articleRepository.listAll()).thenReturn(articleVector)
+      when(articleRepository.listAll()).thenReturn(articleEntities)
       articleRepository
     }
   }
+
 }

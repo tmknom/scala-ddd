@@ -2,29 +2,20 @@ package controllers.article
 
 import javax.inject._
 
+import domains.article.ArticleEntity
 import play.api.libs.json.Json
 import play.api.mvc._
 import services.article.ArticleService
 
-import scala.concurrent.ExecutionContext.Implicits.global
-
 @Singleton
 class ArticleController @Inject()(articleService: ArticleService) extends Controller {
 
-  def index: Action[AnyContent] = Action.async {
-    val future = articleService.listAll()
-    future.map {
-      articleEntities => {
-        for (articleEntity <- articleEntities) {
-          println("hoge: " + articleEntity.title + " : " + articleEntity.url) // scalastyle:ignore
-        }
+  def index: Action[AnyContent] = Action {
+    val articleEntities: Seq[ArticleEntity] = articleService.listAll()
 
-        articleEntities.headOption match {
-          case Some(articleEntity) => Ok(Json.toJson(articleEntity.title))
-          case None  => Ok(Json.toJson("empty"))
-        }
-      }
+    articleEntities.headOption match {
+      case Some(articleEntity) => Ok(Json.toJson(articleEntity.title))
+      case None => Ok(Json.toJson("empty"))
     }
   }
-
 }

@@ -39,7 +39,9 @@ class HatenaBookmarkServiceSpec extends PlaySpec with MockitoSugar {
     @SuppressWarnings(Array("org.wartremover.warts.NonUnitStatements"))
     def mockHatenaBookmarkApi(): HatenaBookmarkApi = {
       // Mockが返す値を作成
-      val response: Future[String] = Future{ FixtureLoader.load(FixturePath.HATENA_BOOKMARK_RSS) }
+      val response: Future[String] = Future {
+        FixtureLoader.load(FixturePath.HATENA_BOOKMARK_RSS)
+      }
 
       // Mockが返す値をセット
       val hatenaBookmarkApi = mock[HatenaBookmarkApi]
@@ -49,15 +51,13 @@ class HatenaBookmarkServiceSpec extends PlaySpec with MockitoSugar {
 
     @SuppressWarnings(Array("org.wartremover.warts.NonUnitStatements"))
     def mockArticleRepository(): ArticleRepository = {
-      // Mockが返す値を作成
-      val futureUnit: Future[Unit] = Future[Unit]{}
-
       // Mockが返す値をセット
       val articleRepository = mock[ArticleRepository]
-      when(articleRepository.insert(any[ArticleEntity])).thenReturn(futureUnit)
+      when(articleRepository.insert(any[ArticleEntity])).thenReturn(1)
       // どうしてもうまくいかないので一旦コメントアウト
       // verify(articleRepository, times(30)).insert(any[ArticleEntity])
       articleRepository
     }
   }
+
 }

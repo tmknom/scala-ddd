@@ -9,18 +9,14 @@ import play.api.Application
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-
 class ArticleServiceSpec extends PlaySpec with MockitoSugar with ScalaFutures {
   "listAll" should {
     val sut: ArticleService = Application.instanceCache[ArticleService].apply(MockBuilder.build())
 
     // テスト実行
     "success" in {
-      whenReady(sut.listAll()) { actual =>
-        actual.size mustBe 1
-      }
+      val actual = sut.listAll()
+      actual.size mustBe 1
     }
   }
 
@@ -34,14 +30,13 @@ class ArticleServiceSpec extends PlaySpec with MockitoSugar with ScalaFutures {
     @SuppressWarnings(Array("org.wartremover.warts.NonUnitStatements"))
     private def articleRepository(): ArticleRepository = {
       // Mockが返す値を作成
-      val articleVector: Future[Seq[ArticleEntity]] = Future.sequence(Seq(Future {
-        ArticleEntity(None, "sample_title", "sample_url")
-      }))
+      val articleEntities: Seq[ArticleEntity] = Seq(ArticleEntity(None, "sample_title", "sample_url"))
 
       // Mockが返す値をセット
       val articleRepository = mock[ArticleRepository]
-      when(articleRepository.listAll()).thenReturn(articleVector)
+      when(articleRepository.listAll()).thenReturn(articleEntities)
       articleRepository
     }
   }
+
 }
