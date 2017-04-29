@@ -19,6 +19,20 @@ import services.{ApplicationTimer, AtomicCounter, Counter}
  * adding `play.modules.enabled` settings to the `application.conf`
  * configuration file.
  */
+
+/**
+  * NonUnitStatements を抑制している理由
+  *
+  * オーバーライドしている configure メソッドは AbstractModule クラスでは void で定義されている。
+  * よって、返り値を Unit にしているのは正しい。
+  *
+  * 一方で Scala の言語仕様上、メソッドの最終行の結果が return される挙動をする。
+  * そのため、バインドに関わるメソッド（例えば to メソッド）の返り値が void ではない場合に
+  * 「Statements must return Unit」という警告が出てしまう。
+  *
+  * 以上のことを勘案した上で、ここでの返り値は、重要な関心事ではないと判断し、警告を抑制することとした。
+  */
+@SuppressWarnings(Array("org.wartremover.warts.NonUnitStatements"))
 class Module extends AbstractModule {
 
   override def configure(): Unit = {

@@ -9,7 +9,10 @@ object CurrentFactory {
     * テストクラス一個だとvolatileなしでも問題ないが、複数テスト走らせるとvolatileなしだとテストこける可能性がある（過去の経験上）
     * joda-timeを参照したトコロ、同様の機構にvolatileをつけて実装しているので、同じように実装している
     * 参考：https://github.com/JodaOrg/joda-time/blob/master/src/main/java/org/joda/time/DateTimeUtils.java
+    *
+    * なお、Wartremoverにvarを使うなと怒られるが、ここではvarにしないといけない箇所なので、警告は抑制する。
     */
+  @SuppressWarnings(Array("org.wartremover.warts.Var"))
   @volatile
   private var clock: Clock = Clock.systemDefaultZone()
 

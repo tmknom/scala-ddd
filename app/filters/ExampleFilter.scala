@@ -16,6 +16,7 @@ import scala.concurrent.{ExecutionContext, Future}
  * It is used below by the `map` method.
  */
 @Singleton
+@SuppressWarnings(Array("org.wartremover.warts.ImplicitParameter"))
 class ExampleFilter @Inject()(
     implicit override val mat: Materializer,
     exec: ExecutionContext) extends Filter {

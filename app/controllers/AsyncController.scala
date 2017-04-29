@@ -18,6 +18,7 @@ import scala.concurrent.duration._
  * asynchronous code.
  */
 @Singleton
+@SuppressWarnings(Array("org.wartremover.warts.ImplicitParameter", "org.wartremover.warts.NonUnitStatements"))
 class AsyncController @Inject() (actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends Controller {
 
   /**

@@ -19,10 +19,9 @@ class ArticleController @Inject()(articleService: ArticleService) extends Contro
           println("hoge: " + articleEntity.title + " : " + articleEntity.url) // scalastyle:ignore
         }
 
-        if (articleEntities.nonEmpty) {
-          Ok(Json.toJson(articleEntities.head.title))
-        }else{
-          Ok(Json.toJson("empty"))
+        articleEntities.headOption match {
+          case Some(articleEntity) => Ok(Json.toJson(articleEntity.title))
+          case None  => Ok(Json.toJson("empty"))
         }
       }
     }
