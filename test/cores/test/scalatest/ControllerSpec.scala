@@ -1,4 +1,4 @@
-package base.scalatest
+package cores.test.scalatest
 
 import org.scalatest.mock.MockitoSugar
 import org.scalatestplus.play.PlaySpec

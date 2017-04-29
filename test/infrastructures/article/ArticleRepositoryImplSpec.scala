@@ -1,6 +1,6 @@
 package infrastructures.article
 
-import base.scalatest.DatabaseSpec
+import cores.test.scalatest.DatabaseSpec
 import domains.article.{ArticleEntity, ArticleRepository}
 import org.scalatest.concurrent.ScalaFutures
 import play.api.Application
