@@ -4,12 +4,26 @@ jobs:
     docker:
       # https://github.com/tmknom/docker-play-framework
       - image: tmknom/play-framework
+        environment:
+          # MySQLの起動チェック用
+          HEALTH_CHECK_RETRY_LIMIT: 10
+          HEALTH_CHECK_RETRY_WAIT: 3
       - image: mysql:5.7
         environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
     working_directory: /var/opt/app
     steps:
       - checkout
+      - run:
+          # MySQLの起動チェック
+          # テスト時にMySQLコンテナの起動が間に合わないことがあるため、接続できるようになるまで待つ
+          # http://engineer.crowdworks.jp/entry/2017/04/04/202719
+          name: Checking mysql connection
+          command: |
+            for i in $(seq $HEALTH_CHECK_RETRY_LIMIT)
+            do
+              mysql -u root -h 127.0.0.1 -e 'show databases' || (sleep $HEALTH_CHECK_RETRY_WAIT; false) && break
+            done
       - run:
           name: Create test database
           command: mysql -u root -h 127.0.0.1 -e 'create database db_test character set utf8mb4;'
