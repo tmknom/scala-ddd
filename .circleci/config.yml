@@ -5,6 +5,8 @@ jobs:
       # https://github.com/tmknom/docker-play-framework
       - image: tmknom/play-framework
         environment:
+          # タイムゾーンは本番環境に合わせる
+          TZ: "/usr/share/zoneinfo/Asia/Tokyo"
           # MySQLの起動チェック用
           HEALTH_CHECK_RETRY_LIMIT: 10
           HEALTH_CHECK_RETRY_WAIT: 3
