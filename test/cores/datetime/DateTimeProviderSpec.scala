@@ -6,7 +6,7 @@ import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.play.PlaySpec
 
 class DateTimeProviderSpec extends PlaySpec with BeforeAndAfterEach {
-  private val FIXED_DATE_TIME = LocalDateTime.of(2016, 12, 31, 23, 59, 59)
+  private val FIXED_DATE_TIME = LocalDateTime.of(2016, 12, 31, 23, 59, 59) // scalastyle:ignore
 
   /**
     * テストケースごとに現在日時を固定する
