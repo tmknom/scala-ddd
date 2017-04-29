@@ -17,6 +17,11 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          name: Restoring cache - sbt
+          keys:
+            - sbt-{{ checksum "build.sbt" }}
+            - sbt-
+      - restore_cache:
           name: Restoring cache - ivy2
           keys:
             - ivy2-{{ checksum "build.sbt" }}
@@ -51,6 +56,11 @@ jobs:
       - run:
           name: Test
           command: activator "test"
+      - save_cache:
+          name: Saving cache - sbt
+          key: sbt-{{ checksum "build.sbt" }}
+          paths:
+            - "~/.sbt"
       - save_cache:
           name: Saving cache - ivy2
           key: ivy2-{{ checksum "build.sbt" }}
