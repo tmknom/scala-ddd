@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # https://github.com/tmknom/docker-play-framework
+      - image: tmknom/play-framework
+    working_directory: /var/opt/app
+    steps:
+      - checkout
+      - run:
+          name: Compile
+          command: activator "compile"
