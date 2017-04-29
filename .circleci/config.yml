@@ -4,9 +4,15 @@ jobs:
     docker:
       # https://github.com/tmknom/docker-play-framework
       - image: tmknom/play-framework
+      - image: mysql:5.7
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
     working_directory: /var/opt/app
     steps:
       - checkout
       - run:
-          name: Compile
-          command: activator "compile"
+          name: Create test database
+          command: mysql -u root -h 127.0.0.1 -e 'create database db_test character set utf8mb4;'
+      - run:
+          name: Test
+          command: activator "test"
