@@ -1,0 +1,78 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # https://github.com/tmknom/docker-play-framework
+      - image: tmknom/play-framework
+        environment:
+          # タイムゾーンは本番環境に合わせる
+          TZ: "/usr/share/zoneinfo/Asia/Tokyo"
+          # MySQLの起動チェック用
+          HEALTH_CHECK_RETRY_LIMIT: 10
+          HEALTH_CHECK_RETRY_WAIT: 3
+      - image: mysql:5.7
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    working_directory: /var/opt/app
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restoring cache - sbt
+          keys:
+            - sbt-{{ checksum "build.sbt" }}
+            - sbt-
+      - restore_cache:
+          name: Restoring cache - ivy2
+          keys:
+            - ivy2-{{ checksum "build.sbt" }}
+            - ivy2-
+      - restore_cache:
+          name: Restoring cache - target
+          keys:
+            - target-{{ checksum "build.sbt" }}
+            - target-
+      - restore_cache:
+          name: Restoring cache - project/target
+          keys:
+            - project-{{ checksum "build.sbt" }}
+            - project-
+      - run:
+          # MySQLの起動チェック
+          # テスト時にMySQLコンテナの起動が間に合わないことがあるため、接続できるようになるまで待つ
+          # http://engineer.crowdworks.jp/entry/2017/04/04/202719
+          name: Checking mysql connection
+          command: |
+            for i in $(seq $HEALTH_CHECK_RETRY_LIMIT)
+            do
+              mysql -u root -h 127.0.0.1 -e 'show databases' || (sleep $HEALTH_CHECK_RETRY_WAIT; false) && break
+            done
+      - run:
+          name: Create test database
+          command: |
+            mysql -u root -h 127.0.0.1 -e 'GRANT ALL ON *.* TO db_user IDENTIFIED BY "db_password";'
+            mysql -u root -h 127.0.0.1 -e 'FLUSH PRIVILEGES;'
+            mysql -u root -h 127.0.0.1 -e 'create database db_production character set utf8mb4;'
+            mysql -u root -h 127.0.0.1 -e 'create database db_test character set utf8mb4;'
+      - run:
+          name: Test
+          command: activator "test"
+      - save_cache:
+          name: Saving cache - sbt
+          key: sbt-{{ checksum "build.sbt" }}
+          paths:
+            - "~/.sbt"
+      - save_cache:
+          name: Saving cache - ivy2
+          key: ivy2-{{ checksum "build.sbt" }}
+          paths:
+            - "~/.ivy2"
+      - save_cache:
+          name: Saving cache - target
+          key: target-{{ checksum "build.sbt" }}
+          paths:
+            - "target"
+      - save_cache:
+          name: Saving cache - project/target
+          key: project-{{ checksum "build.sbt" }}
+          paths:
+            - "project/target"
