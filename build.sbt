@@ -26,17 +26,21 @@ resourceDirectory in Test := baseDirectory.value / "test/fixtures"
 // 定期的にバージョンアップしたい
 libraryDependencies ++= Seq(
   // DB接続用でおなじみ
-  // どうやらslickを使うときは消さないといけないっぽい
-  // https://playframework.com/documentation/ja/2.4.x/PlaySlickFAQ
-  // jdbc,
+  jdbc,
+  // DBマイグレーション
+  evolutions,
   // MySQLで接続するのに必要だぞ！
   // なんか6.0.X系もあるけど、どっちがいいんだろう
   "mysql" % "mysql-connector-java" % "5.1.41",
   // O/Rマッパー
-  // https://github.com/playframework/play-slick
-  "com.typesafe.play" %% "play-slick" % "2.0.2",
-  // DBマイグレーション
-  "com.typesafe.play" %% "play-slick-evolutions" % "2.0.2",
+  // http://skinny-framework.org/documentation/orm.html
+  "org.skinny-framework" %% "skinny-orm" % "2.3.6",
+  // コネクションプールの作成に必要
+  // Skinny-ORM は内部的に ScalikeJDBC を使っており、コネクションプールを初期化する必要がある
+  // そのコネクションプールの初期化を担ってくれるようだ
+  // なお application.conf に下記記述が必要
+  // play.modules.enabled += "scalikejdbc.PlayModule"
+  "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.5.1",
   // play-cache ってのインポートしてるっぽい
   // キャッシュ絡みのなにかということしか分からない（何のキャッシュだよ。。）
   cache,
@@ -61,18 +65,18 @@ libraryDependencies ++= Seq(
 // コンパイル時にドキュメントを含めない
 // こうすると、コンパイルがちょっと高速になるかもしれない
 // https://www.playframework.com/documentation/2.5.x/SBTCookbook#Disable-documentation
-sources in (Compile, doc) := Seq.empty
+sources in(Compile, doc) := Seq.empty
 
 // Artifact作成時にドキュメントを含めない
 // こうすると、Artifact作成がちょっと高速になるかもしれない
 //
 // http://www.scala-sbt.org/0.13/docs/Artifacts.html
 // disable publishing the main jar produced by `package`
-publishArtifact in (Compile, packageBin) := false
+publishArtifact in(Compile, packageBin) := false
 // disable publishing the main API jar
-publishArtifact in (Compile, packageDoc) := false
+publishArtifact in(Compile, packageDoc) := false
 // disable publishing the main sources jar
-publishArtifact in (Compile, packageSrc) := false
+publishArtifact in(Compile, packageSrc) := false
 
 /**
   * Scalastyleでテストコード側もデフォルトでチェックするよう設定
@@ -104,7 +108,7 @@ testScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Compile).toT
   *
   * @see http://www.wartremover.org/doc/install-setup.html
   */
-wartremoverErrors in (Compile, compile) ++= Warts.allBut(Wart.Overloading)
+wartremoverErrors in(Compile, compile) ++= Warts.allBut(Wart.Overloading)
 // 本当は右記のように書こうとした => wartremoverExcluded += baseDirectory.value / "conf" / "routes"
 // が、除外してくれなかったので、このような書き方に落ち着いた。たぶん、conf配下のファイルは扱いが特殊なんだろう。
 // http://stackoverflow.com/questions/34788530/wartremover-still-reports-warts-in-excluded-play-routes-file
@@ -125,4 +129,4 @@ wartremoverExcluded ++= routes.in(Compile).value
   *   - よって、テストコードでは OptionPartial を抑制することにした。
   *   - 本当はコントローラのテストコードだけ指定とかできればよいが、そこは妥協することとした。
   */
-wartremoverErrors in (Test, test) ++= Warts.allBut(Wart.Overloading, Wart.OptionPartial)
+wartremoverErrors in(Test, test) ++= Warts.allBut(Wart.Overloading, Wart.OptionPartial)
