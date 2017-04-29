@@ -73,3 +73,13 @@ publishArtifact in (Compile, packageBin) := false
 publishArtifact in (Compile, packageDoc) := false
 // disable publishing the main sources jar
 publishArtifact in (Compile, packageSrc) := false
+
+/**
+  * テスト時もついでに Scalastyle を実行するよう設定
+  *
+  * activator scalastyle コマンドを実行した場合は compile 用の設定が読み込まれる。
+  * 同様の設定をテスト時のチェックにも使いまわしたいのでCompileを指定している。
+  */
+lazy val testScalastyle = taskKey[Unit]("testScalastyle")
+testScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Compile).toTask("").value
+(test in Test) <<= (test in Test) dependsOn testScalastyle
