@@ -30,8 +30,7 @@ libraryDependencies ++= Seq(
   // DBマイグレーション
   evolutions,
   // MySQLで接続するのに必要だぞ！
-  // なんか6.0.X系もあるけど、どっちがいいんだろう
-  "mysql" % "mysql-connector-java" % "5.1.41",
+  "mysql" % "mysql-connector-java" % "6.0.6",
   // O/Rマッパー
   // http://skinny-framework.org/documentation/orm.html
   "org.skinny-framework" %% "skinny-orm" % "2.3.6",
