@@ -1,5 +1,10 @@
 # scala-ddd
 
+[![CircleCI](https://circleci.com/gh/tmknom/scala-ddd/tree/master.svg?style=svg)](https://circleci.com/gh/tmknom/scala-ddd/tree/master)
+
+
+## Description
+
 ScalaでDDDを実践するよ！
 
 
