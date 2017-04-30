@@ -69,7 +69,7 @@ libraryDependencies ++= Seq(
   "org.mockito" % "mockito-core" % "2.7.20" % Test,
   // xUnit用ライブラリ
   // playの標準テストライブラリなので、そのまま採用する
-  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
+  "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0" % Test
 )
 
 // コンパイル時にドキュメントを含めない
