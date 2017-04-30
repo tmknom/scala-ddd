@@ -30,7 +30,19 @@ libraryDependencies ++= Seq(
   // DBマイグレーション
   evolutions,
   // MySQLで接続するのに必要だぞ！
-  "mysql" % "mysql-connector-java" % "6.0.6",
+  // 一度6.0.6にバージョンを上げてみたが、警告が出るようになったため、5系の最新版にしておく
+  //
+  // play が com.mysql.jdbc.Driver を使っているためこのような警告が出ると推測されるが
+  // 今後 play がバージョンアップを重ねていけば、そのうち com.mysql.cj.jdbc.Driver になる気がする
+  //
+  // jdbc については、一応 play 推奨のバージョンでいきたいので、一旦5系のままでいくことにする
+  //
+  // scalastyle:off
+  // 6.0.6のときに出力された警告
+  //   Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+  //   [warn] c.z.h.u.DriverDataSource - Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+  // scalastyle:on
+  "mysql" % "mysql-connector-java" % "5.1.41",
   // O/Rマッパー
   // http://skinny-framework.org/documentation/orm.html
   "org.skinny-framework" %% "skinny-orm" % "2.3.6",
