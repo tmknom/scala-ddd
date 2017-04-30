@@ -1,8 +1,8 @@
 package infrastructures.crawler
 
 import cores.test.fixture.FixtureLoader
-import fixtures.FixturePath
 import org.scalatestplus.play.PlaySpec
+import resources.fixture.FixturePath
 
 @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 class HatenaBookmarkParserImplSpec extends PlaySpec {

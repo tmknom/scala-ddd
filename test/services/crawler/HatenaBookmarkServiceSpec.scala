@@ -3,7 +3,6 @@ package services.crawler
 import cores.test.fixture.FixtureLoader
 import domains.article.{ArticleEntity, ArticleRepository}
 import domains.crawler.HatenaBookmarkApi
-import fixtures.FixturePath
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
@@ -11,6 +10,7 @@ import org.scalatestplus.play.PlaySpec
 import play.api.Application
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
+import resources.fixture.FixturePath
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
