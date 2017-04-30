@@ -55,4 +55,3 @@ object QueryListener {
     sql.contains(SecretPrefix)
   }
 }
-
