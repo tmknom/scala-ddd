@@ -36,10 +36,20 @@ libraryDependencies ++= Seq(
   // http://skinny-framework.org/documentation/orm.html
   "org.skinny-framework" %% "skinny-orm" % "2.3.6",
   // コネクションプールの作成に必要
+  //
   // Skinny-ORM は内部的に ScalikeJDBC を使っており、コネクションプールを初期化する必要がある
   // そのコネクションプールの初期化を担ってくれるようだ
+  //
   // なお application.conf に下記記述が必要
   // play.modules.enabled += "scalikejdbc.PlayModule"
+  //
+  // 余談だが、ScalikeJDBC 自体は日本人が開発しているようで、日本語ドキュメントが開発者によって公開されている
+  // https://github.com/scalikejdbc/scalikejdbc-cookbook/tree/master/ja
+  //
+  // また ScalikeJDBC は近々メジャーバージョンアップが予定されているもよう
+  // サポート対象をJava8以上のみとして、JSR-310（ZonedDateTimeとか）にデフォルトで対応するらしい
+  // よく分からんけど Reactive Streams というのにも標準対応するらしい
+  // https://github.com/scalikejdbc/scalikejdbc/blob/master/notes/3.0.0.markdown
   "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.5.1",
   // play-cache ってのインポートしてるっぽい
   // キャッシュ絡みのなにかということしか分からない（何のキャッシュだよ。。）
