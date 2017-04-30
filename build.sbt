@@ -60,7 +60,7 @@ libraryDependencies ++= Seq(
   // HTTP通信用ライブラリ
   // wsよりコッチを使うほうが推奨されているっぽい
   // http://qiita.com/bigwheel/items/44cb874ced4be204c09c
-  "net.databinder.dispatch" %% "dispatch-core" % "0.11.2",
+  "net.databinder.dispatch" %% "dispatch-core" % "0.12.0",
 
   // ちゃんと調べてないけど、こっから下はテスト用だと思われる
   //
