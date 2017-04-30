@@ -24,7 +24,7 @@ object QueryListener {
     */
   def queryCompletionListener: QueryCompletionListener = (sql: String, params: Seq[Any], millis: Long) => {
     val stringParams = rawOrMaskedParams(sql, params)
-    val message = createMessage(sql, stringParams, millis)
+    val message = createCompletionMessage(sql, stringParams, millis)
     Logger.debug(message)
   }
 
@@ -37,7 +37,7 @@ object QueryListener {
     Logger.error(message)
   }
 
-  private def createMessage(sql: String, stringParams: Seq[String], millis: Long): String = {
+  private def createCompletionMessage(sql: String, stringParams: Seq[String], millis: Long): String = {
     Json.obj(
       "query" ->
         Json.obj(
