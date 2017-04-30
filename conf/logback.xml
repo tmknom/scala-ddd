@@ -27,6 +27,10 @@
   <logger name="play" level="INFO" />
   <logger name="application" level="DEBUG" />
 
+  <!-- SQLの実行ログ出力設定 -->
+  <!-- ここで設定する値と application.conf で設定する scalikejdbc.global.loggingSQLAndTime.logLevel は同一の値を設定する -->
+  <logger name="scalikejdbc" level="DEBUG"/>
+
   <!-- Off these ones as they are annoying, and anyway we manage configuration ourselves -->
   <logger name="com.avaje.ebean.config.PropertyMapLoader" level="OFF" />
   <logger name="com.avaje.ebeaninternal.server.core.XmlConfigLoader" level="OFF" />
