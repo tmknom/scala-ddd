@@ -143,6 +143,11 @@ wartremoverErrors in(Test, test) ++= Warts.allBut(Wart.Overloading, Wart.OptionP
 
 /**
   * sbt-updates の依存ライブラリアップデートチェックの対象外を設定
+  *
+  * dependencyUpdatesExclusions は非推奨になったから代わりに
+  * dependencyUpdatesFilter を使えって書いてあるけど、なぜか使えない。。
+  *
+  * @see https://github.com/rtimush/sbt-updates#exclusions
   */
 dependencyUpdatesExclusions := moduleFilter(organization = "org.scala-lang")
 
