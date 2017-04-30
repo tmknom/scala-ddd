@@ -1,5 +1,5 @@
 // The Play plugin
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.10")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.14")
 
 // JS/CSS絡みは無効にしておく
 // どうせREST APIしか実装しないのでこの記述は不要
