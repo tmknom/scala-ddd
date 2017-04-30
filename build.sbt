@@ -22,6 +22,9 @@ scalaVersion := "2.11.11"
 // テスト用のFixtureファイルをロードできるように設定
 resourceDirectory in Test := baseDirectory.value / "test/resources"
 
+// テスト時に読み込むlogbackの設定を切り替え
+javaOptions in Test += "-Dlogger.resource=logback-test.xml"
+
 // 依存ライブラリ
 // 定期的にバージョンアップしたい
 libraryDependencies ++= Seq(
