@@ -28,6 +28,12 @@ activator compile
 activator test
 ```
 
+### カバレッジの生成
+
+```bash
+activator clean coverage test coverageReport
+```
+
 ### 静的解析：Scalastyle
 
 ```bash
