@@ -20,7 +20,7 @@ scalaVersion := "2.11.11"
 // http://www.scala-sbt.org/0.13/docs/Howto-Customizing-Paths.html#Change+the+default+resource+directory
 //
 // テスト用のFixtureファイルをロードできるように設定
-resourceDirectory in Test := baseDirectory.value / "test/fixtures"
+resourceDirectory in Test := baseDirectory.value / "test/resources"
 
 // 依存ライブラリ
 // 定期的にバージョンアップしたい
