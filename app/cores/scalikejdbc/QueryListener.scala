@@ -2,7 +2,7 @@ package cores.scalikejdbc
 
 import play.api.Logger
 import play.api.libs.json.Json
-import scalikejdbc.GlobalSettings.QueryCompletionListener
+import scalikejdbc.GlobalSettings.{QueryCompletionListener, QueryFailureListener}
 
 /**
   * SQL クエリ実行後にフックして処理を差し込む
@@ -24,17 +24,40 @@ object QueryListener {
     */
   def queryCompletionListener: QueryCompletionListener = (sql: String, params: Seq[Any], millis: Long) => {
     val stringParams = rawOrMaskedParams(sql, params)
-    val message = createMessage(sql, stringParams, millis)
+    val message = createCompletionMessage(sql, stringParams, millis)
     Logger.debug(message)
   }
 
-  private def createMessage(sql: String, stringParams: Seq[String], millis: Long): String = {
+  /**
+    * Event handler to be called every query failure.
+    */
+  def queryFailureListener: QueryFailureListener = (sql: String, params: Seq[Any], throwable: Throwable) => {
+    val stringParams = rawOrMaskedParams(sql, params)
+    val message = createFailureMessage(sql, stringParams, throwable)
+    Logger.error(message)
+  }
+
+  private def createCompletionMessage(sql: String, stringParams: Seq[String], millis: Long): String = {
     Json.obj(
       "query" ->
         Json.obj(
           "sql" -> sql,
           "params" -> stringParams,
           "millis" -> millis
+        )
+    ).toString()
+  }
+
+  private def createFailureMessage(sql: String, stringParams: Seq[String], throwable: Throwable): String = {
+    Json.obj(
+      "query" ->
+        Json.obj(
+          "sql" -> sql,
+          "params" -> stringParams,
+          "exception" -> Json.obj(
+            "name" -> throwable.getClass.getSimpleName,
+            "message" -> throwable.getMessage
+          )
         )
     ).toString()
   }

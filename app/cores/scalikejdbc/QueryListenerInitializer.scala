@@ -14,6 +14,7 @@ final class QueryListenerInitializer {
     */
   private[this] def onStart(): Unit = {
     GlobalSettings.queryCompletionListener = QueryListener.queryCompletionListener
+    GlobalSettings.queryFailureListener = QueryListener.queryFailureListener
   }
 
   // アプリケーション起動時に呼ばれる
