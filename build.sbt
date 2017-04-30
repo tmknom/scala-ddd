@@ -13,7 +13,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 // Scalaのバージョン
 // たまにはアップデートしてあげたい
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.11"
 
 // リソースファイルのパスの設定
 // デフォルトでは、src/test/resourcesが設定されているが変更する
