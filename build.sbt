@@ -140,3 +140,13 @@ wartremoverExcluded ++= routes.in(Compile).value
   *   - 本当はコントローラのテストコードだけ指定とかできればよいが、そこは妥協することとした。
   */
 wartremoverErrors in(Test, test) ++= Warts.allBut(Wart.Overloading, Wart.OptionPartial)
+
+/**
+  * sbt-updates の依存ライブラリアップデートチェックの対象外を設定
+  */
+dependencyUpdatesExclusions := moduleFilter(organization = "org.scala-lang")
+
+/**
+  * sbt-updates の依存ライブラリアップデートチェック時に、アップデートすべきものがあればエラーにする
+  */
+dependencyUpdatesFailBuild := true

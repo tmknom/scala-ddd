@@ -33,3 +33,10 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.8.0")
   * @see http://www.wartremover.org/
   */
 addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.0.3")
+
+/**
+  * 依存ライブラリのアップデート確認
+  *
+  * @see https://github.com/rtimush/sbt-updates
+  */
+addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.0")

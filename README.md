@@ -34,6 +34,11 @@ activator test
 activator scalastyle
 ```
 
+### 依存ライブラリのアップデートチェック
+
+```bash
+activator dependencyUpdates
+```
 
 ## Installation
 
