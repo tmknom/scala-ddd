@@ -55,6 +55,12 @@ jobs:
       - run:
           name: Test
           command: activator "test"
+      - run:
+          name: Coverage
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              activator coverage test;
+            fi
       - save_cache:
           name: Saving cache - sbt
           key: sbt-{{ checksum "build.sbt" }}
@@ -75,3 +81,9 @@ jobs:
           key: project-{{ checksum "build.sbt" }}
           paths:
             - "project/target"
+      - store_test_results:
+          name: Uploading test results
+          path: target/test-reports/
+      - store_artifacts:
+          name: Uploading coverage results
+          path: target/scala-2.11/scoverage-data/
