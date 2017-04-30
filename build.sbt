@@ -88,6 +88,14 @@ publishArtifact in(Compile, packageDoc) := false
 publishArtifact in(Compile, packageSrc) := false
 
 /**
+  * カバレッジの除外対象
+  *
+  * ドキュメントにはこれで除外できそうな記述がある。が、動いてくれない。。
+  * @see https://github.com/scoverage/sbt-scoverage#exclude-classes-and-packages
+  */
+// coverageExcludedPackages := "controllers.Reverse.*;controllers.javascript.Reverse.*"
+
+/**
   * Scalastyleでテストコード側もデフォルトでチェックするよう設定
   *
   * テストコードもプロダクトコード同様の品質にすべきである。
