@@ -1,5 +1,6 @@
 package cores.request_handler.internal
 
+import cores.request.RequestHeaderTagName
 import org.scalatestplus.play.PlaySpec
 import play.api.test.FakeRequest
 

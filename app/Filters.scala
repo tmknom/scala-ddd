@@ -1,7 +1,6 @@
 import javax.inject._
 
-import cores.equality.TripleEquals._
-import filters.ExampleFilter
+import cores.filter.RequestLoggingFilter
 import play.api._
 import play.api.http.HttpFilters
 import play.api.mvc._
@@ -22,13 +21,10 @@ import play.api.mvc._
 @Singleton
 class Filters @Inject() (
   env: Environment,
-  exampleFilter: ExampleFilter) extends HttpFilters {
+  requestLoggingFilter: RequestLoggingFilter) extends HttpFilters {
 
   override val filters: Seq[Filter] = {
-    // Use the example filter if we're running development mode. If
-    // we're running in production or test mode then don't use any
-    // filters at all.
-    if (env.mode === Mode.Dev) Seq(exampleFilter) else Seq.empty[Filter]
+    Seq(requestLoggingFilter)
   }
 
 }
