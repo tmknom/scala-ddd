@@ -10,6 +10,8 @@ import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * HTTPリクエストとレスポンスをロギングするクラス
+  *
+  * @see https://www.playframework.com/documentation/2.5.x/ScalaHttpFilters#A-simple-logging-filter
   */
 @Singleton
 @SuppressWarnings(Array("org.wartremover.warts.ImplicitParameter"))

@@ -1,6 +1,6 @@
 import javax.inject._
 
-import cores.filter.RequestLoggingFilter
+import cores.filter.{MDCFilter, RequestLoggingFilter}
 import play.api._
 import play.api.http.HttpFilters
 import play.api.mvc._
@@ -21,10 +21,19 @@ import play.api.mvc._
 @Singleton
 class Filters @Inject() (
   env: Environment,
+  mdcFilter: MDCFilter,
   requestLoggingFilter: RequestLoggingFilter) extends HttpFilters {
 
   override val filters: Seq[Filter] = {
-    Seq(requestLoggingFilter)
+    /**
+      * 【重要】
+      * MDCFilter は必ず最初に読み込むこと！
+      * 順番を変えると、ログ出力時に MDC の値が使われない可能性がある
+      *
+      * @todo というか、この順番を守っても、リクエスト終了時のログで、たまに出なくなる。。
+      *       MDCFilter と RequestLoggingFilter は分けちゃダメかもしれない。。。
+      */
+    Seq(mdcFilter, requestLoggingFilter)
   }
 
 }
