@@ -28,9 +28,6 @@ final class RequestLoggingFilter @Inject()(implicit override val mat: Materializ
     RequestLogger.logStart(requestHeader)
 
     nextFilter(requestHeader).map { result =>
-      // ココにも書かないと、MDC経由でログが出力されない（なぜだ。。）
-      MDC.put(MDCKey.RequestId, requestHeader.tags(RequestHeaderTagName.RequestId))
-
       val requestTime = RequestTime(System.currentTimeMillis - startTime)
       RequestLogger.logEnd(requestHeader, result, requestTime)
 
