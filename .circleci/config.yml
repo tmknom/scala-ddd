@@ -70,6 +70,7 @@ jobs:
               mkdir target/analysis/
               activator "cpd"
               activator "scapegoat"
+              activator "dependencyCheck"
               activator -no-colors "stats" > target/analysis/statistics.txt
             fi
       - save_cache:

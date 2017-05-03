@@ -73,6 +73,11 @@ addSbtPlugin("de.johoop" % "cpd4sbt" % "1.2.0")
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.0")
 
 /**
+  * 依存ライブラリの脆弱性チェック
+  */
+addSbtPlugin("net.vonbuchholtz" % "sbt-dependency-check" % "0.1.7")
+
+/**
   * プロジェクトの統計情報取得
   *
   * @see https://github.com/orrsella/sbt-stats
