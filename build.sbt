@@ -190,6 +190,24 @@ wartremoverExcluded ++= routes.in(Compile).value
 wartremoverErrors in(Test, test) ++= Warts.allBut(Wart.Overloading, Wart.OptionPartial)
 
 /**
+  * Scapegoat で除外する対象
+  */
+scapegoatIgnoredFiles := Seq(
+  ".*/Routes.scala",
+  ".*/JavaScriptReverseRoutes.scala",
+  ".*/RoutesPrefix.scala",
+  ".*/ReverseRoutes.scala"
+)
+
+/**
+  * Scapegoat で除外する警告
+  *
+  * - 警告の除外設定
+  *   - RedundantFinalModifierOnCaseClass : WartRemoverとぶつかるうえcase classの継承を許可するのが望ましいとは思えないので除外
+  */
+scapegoatDisabledInspections := Seq("RedundantFinalModifierOnCaseClass")
+
+/**
   * CMD によるコピペチェックの設定
   *
   * これを入れないと、全部コピペチェックに引っかかる。

@@ -69,6 +69,7 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               mkdir target/analysis/
               activator "cpd"
+              activator "scapegoat"
               activator -no-colors "stats" > target/analysis/statistics.txt
             fi
       - save_cache:
@@ -100,6 +101,9 @@ jobs:
       - store_artifacts:
           name: Uploading cpd results
           path: target/scala-2.11/cpd/
+      - store_artifacts:
+          name: Uploading scapegoat results
+          path: target/scala-2.11/scapegoat-report/
       - store_artifacts:
           name: Uploading analysis results
           path: target/analysis/

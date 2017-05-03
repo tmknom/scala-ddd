@@ -41,6 +41,12 @@ activator clean coverage test coverageReport
 activator scalastyle
 ```
 
+### 静的解析：Scapegoat
+
+```bash
+activator scapegoat
+```
+
 ### コピペチェック
 
 ```bash
