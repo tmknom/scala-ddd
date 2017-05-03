@@ -74,6 +74,12 @@ jobs:
               activator -no-colors "stats" > target/analysis/statistics.txt
               activator "doc"
             fi
+      - run:
+          name: scaladoc
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "modify-scaladoc" ]; then
+              activator "doc"
+            fi
       - save_cache:
           name: Saving cache - sbt
           key: sbt-{{ checksum "build.sbt" }}
