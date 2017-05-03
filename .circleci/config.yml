@@ -64,10 +64,11 @@ jobs:
       - run:
           # ライン数などを取得
           # ちなみに -no-colors 指定してるのは、カラーコードがテキストファイルに出力されるのが鬱陶しいため
-          name: Statistics
+          name: Static analysis
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               mkdir target/analysis/
+              activator "cpd"
               activator -no-colors "stats" > target/analysis/statistics.txt
             fi
       - save_cache:
@@ -96,6 +97,9 @@ jobs:
       - store_artifacts:
           name: Uploading coverage results
           path: target/scala-2.11/scoverage-data/
+      - store_artifacts:
+          name: Uploading cpd results
+          path: target/scala-2.11/cpd/
       - store_artifacts:
           name: Uploading analysis results
           path: target/analysis/
