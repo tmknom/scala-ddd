@@ -105,10 +105,16 @@ publishArtifact in(Compile, packageSrc) := false
 /**
   * カバレッジの除外対象
   *
-  * ドキュメントにはこれで除外できそうな記述がある。が、動いてくれない。。
+  * 自動生成されるroutes系のパッケージを除外する。
+  * 除外対象を追加したい場合、正規表現で対象パッケージを指定できる。
+  * ファイル単位で除外対象を指定したい場合は coverageExcludedFiles を使う。
+  *
   * @see https://github.com/scoverage/sbt-scoverage#exclude-classes-and-packages
   */
-// coverageExcludedPackages := "controllers.Reverse.*;controllers.javascript.Reverse.*"
+coverageExcludedPackages := Seq(
+  "router\\.*",
+  "controllers\\..*Reverse.*"
+).mkString(";")
 
 /**
   * Scalastyleでテストコード側もデフォルトでチェックするよう設定
