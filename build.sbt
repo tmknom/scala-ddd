@@ -9,7 +9,9 @@ version := "1.0-SNAPSHOT"
 // ビルド定義というらしい
 // サブプロジェクトとか作るときなどに色々弄るっぽい
 // あまり知見がないので、最初は activator さんが吐き出したまま使おう
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file("."))
+  .enablePlugins(PlayScala)
+  .enablePlugins(CopyPasteDetector)
 
 // Scalaのバージョン
 // たまにはアップデートしてあげたい
@@ -186,6 +188,24 @@ wartremoverExcluded ++= routes.in(Compile).value
   *   - 本当はコントローラのテストコードだけ指定とかできればよいが、そこは妥協することとした。
   */
 wartremoverErrors in(Test, test) ++= Warts.allBut(Wart.Overloading, Wart.OptionPartial)
+
+/**
+  * CMD によるコピペチェックの設定
+  *
+  * これを入れないと、全部コピペチェックに引っかかる。
+  * target ディレクトリも対象になっちゃってる？
+  */
+cpdSkipDuplicateFiles := true
+
+/**
+  * ここで設定した単語数以上が重複していたら、コピペチェックで引っかける
+  *
+  * デフォルトでは 100 と、やや大きめなので、少し小さめの値をセットする。
+  *
+  * @see https://github.com/sbt/cpd4sbt/blob/master/src/main/scala/de/johoop/cpd4sbt/Settings.scala#L33
+  */
+cpdMinimumTokens := 30
+
 
 /**
   * sbt-updates の依存ライブラリアップデートチェックの対象外を設定
