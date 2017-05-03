@@ -53,13 +53,13 @@ jobs:
           name: Create test database
           command: mysql -u root -h 127.0.0.1 -e 'create database db_test character set utf8mb4;'
       - run:
+          # CI 高速化のため master のみカバレッジを取得
           name: Test
-          command: activator "test"
-      - run:
-          name: Coverage
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               activator coverage test coverageReport coveralls;
+            else
+              activator "test"
             fi
       - save_cache:
           name: Saving cache - sbt
