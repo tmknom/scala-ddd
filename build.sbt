@@ -239,3 +239,8 @@ dependencyUpdatesExclusions := moduleFilter(organization = "org.scala-lang")
   * sbt-updates の依存ライブラリアップデートチェック時に、アップデートすべきものがあればエラーにする
   */
 dependencyUpdatesFailBuild := true
+
+/**
+  * sbt-dependency-check の出力先を変更
+  */
+dependencyCheckOutputDirectory := Some(file("target/analysis/"))
