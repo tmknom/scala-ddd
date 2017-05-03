@@ -52,6 +52,13 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.8.0")
 addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.0.3")
 
 /**
+  * コピペチェック
+  *
+  * @see https://github.com/sbt/cpd4sbt
+  */
+addSbtPlugin("de.johoop" % "cpd4sbt" % "1.2.0")
+
+/**
   * 依存ライブラリのアップデート確認
   *
   * @see https://github.com/rtimush/sbt-updates
@@ -60,5 +67,7 @@ addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.0")
 
 /**
   * プロジェクトの統計情報取得
+  *
+  * @see https://github.com/orrsella/sbt-stats
   */
 addSbtPlugin("com.orrsella" % "sbt-stats" % "1.0.5")
