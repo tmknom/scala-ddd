@@ -52,6 +52,13 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.8.0")
 addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.0.3")
 
 /**
+  * 静的解析ツール：Scapegoat
+  *
+  * @see https://github.com/sksamuel/sbt-scapegoat
+  */
+addSbtPlugin("com.sksamuel.scapegoat" %% "sbt-scapegoat" % "1.0.4")
+
+/**
   * コピペチェック
   *
   * @see https://github.com/sbt/cpd4sbt
