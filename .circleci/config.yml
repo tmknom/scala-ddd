@@ -72,6 +72,7 @@ jobs:
               activator "scapegoat"
               activator "dependencyCheck"
               activator -no-colors "stats" > target/analysis/statistics.txt
+              activator "doc"
             fi
       - save_cache:
           name: Saving cache - sbt
@@ -96,6 +97,9 @@ jobs:
       - store_test_results:
           name: Uploading test results
           path: target/test-reports/
+      - store_artifacts:
+          name: Uploading scaladoc
+          path: target/scala-2.11/api/
       - store_artifacts:
           name: Uploading coverage results
           path: target/scala-2.11/scoverage-data/
