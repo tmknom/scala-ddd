@@ -41,6 +41,12 @@ activator clean coverage test coverageReport
 activator scalastyle
 ```
 
+### コピペチェック
+
+```bash
+activator cpd
+```
+
 ### 依存ライブラリのアップデートチェック
 
 ```bash
