@@ -59,7 +59,7 @@ jobs:
           name: Coverage
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              activator coverage test;
+              activator coverage test coverageReport coveralls;
             fi
       - save_cache:
           name: Saving cache - sbt
