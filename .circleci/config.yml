@@ -78,12 +78,12 @@ jobs:
           name: Saving cache - sbt
           key: sbt-{{ checksum "build.sbt" }}
           paths:
-            - "~/.sbt"
+            - ".sbt"
       - save_cache:
           name: Saving cache - ivy2
           key: ivy2-{{ checksum "build.sbt" }}
           paths:
-            - "~/.ivy2"
+            - ".ivy2"
       - save_cache:
           name: Saving cache - target
           key: target-{{ checksum "build.sbt" }}

@@ -93,9 +93,24 @@ libraryDependencies ++= Seq(
 // https://www.playframework.com/documentation/2.5.x/SBTCookbook#Disable-documentation
 // sources in(Compile, doc) := Seq.empty
 
-// クラス図を生成できる
-// http://nantonaku-shiawase.hatenablog.com/entry/2013/12/04/010355
-// scalacOptions in(Compile, doc) ++= Seq("-groups", "-implicits", "-diagrams")
+/**
+  * ドキュメントにgraphvizの図を出力
+  *
+  * @see http://nantonaku-shiawase.hatenablog.com/entry/2013/12/04/010355
+  */
+scalacOptions in(Compile, doc) ++= Seq(
+  "-groups",
+  "-implicits",
+  "-diagrams",
+  "-skip-packages", Seq("router").mkString(":")
+)
+
+/**
+  * API ドキュメントの自動リンク
+  *
+  * @see http://www.scala-sbt.org/0.13/docs/Howto-Scaladoc.html#Enable+automatic+linking+to+the+external+Scaladoc+of+managed+dependencies
+  */
+autoAPIMappings := true
 
 // Artifact作成時にドキュメントを含めない
 // こうすると、Artifact作成がちょっと高速になるかもしれない
