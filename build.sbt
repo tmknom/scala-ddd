@@ -117,6 +117,24 @@ coverageExcludedPackages := Seq(
 ).mkString(";")
 
 /**
+  * カバレッジが coverageMinimum で指定した値より下回ったらビルドを失敗させる
+  *
+  * デフォルト値は false なので明示的に指定する。
+  *
+  * @see https://github.com/scoverage/sbt-scoverage#minimum-coverage
+  */
+coverageFailOnMinimum := true
+
+/**
+  * カバレッジで維持したい最小値を設定
+  *
+  * デフォルト値は 0 なので明示的に指定する。
+  *
+  * @see https://github.com/scoverage/sbt-scoverage/blob/master/src/main/scala/scoverage/ScoverageSbtPlugin.scala#L30
+  */
+coverageMinimum := 55
+
+/**
   * Scalastyleでテストコード側もデフォルトでチェックするよう設定
   *
   * テストコードもプロダクトコード同様の品質にすべきである。
