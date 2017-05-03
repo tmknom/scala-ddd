@@ -61,6 +61,15 @@ jobs:
             else
               activator "test"
             fi
+      - run:
+          # ライン数などを取得
+          # ちなみに -no-colors 指定してるのは、カラーコードがテキストファイルに出力されるのが鬱陶しいため
+          name: Statistics
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              mkdir target/analysis/
+              activator -no-colors "stats" > target/analysis/statistics.txt
+            fi
       - save_cache:
           name: Saving cache - sbt
           key: sbt-{{ checksum "build.sbt" }}
@@ -87,3 +96,6 @@ jobs:
       - store_artifacts:
           name: Uploading coverage results
           path: target/scala-2.11/scoverage-data/
+      - store_artifacts:
+          name: Uploading analysis results
+          path: target/analysis/
