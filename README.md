@@ -1,6 +1,7 @@
 # scala-ddd
 
 [![CircleCI](https://circleci.com/gh/tmknom/scala-ddd/tree/master.svg?style=svg)](https://circleci.com/gh/tmknom/scala-ddd/tree/master)
+[![Coverage Status](https://coveralls.io/repos/github/tmknom/scala-ddd/badge.svg?branch=master)](https://coveralls.io/github/tmknom/scala-ddd?branch=master)
 
 
 ## Description
@@ -52,8 +53,3 @@ activator dependencyUpdates
 git clone git@github.com:tmknom/scala-ddd.git && cd scala-ddd
 activator compile
 ```
-
-
-## License
-
-MIT.
