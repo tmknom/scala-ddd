@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       # https://github.com/tmknom/docker-play-framework
-      - image: tmknom/play-framework
+      - image: tmknom/play-development
         environment:
           DB_URL: "jdbc:mysql://127.0.0.1/db_test?characterEncoding=UTF8&connectionCollation=utf8mb4_bin&useSSL=false"
           DB_USER: "root"
@@ -67,7 +67,7 @@ jobs:
           name: Static analysis
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              mkdir target/analysis/
+              mkdir -p target/analysis/
               activator "cpd"
               activator "scapegoat"
               activator "dependencyCheck"
