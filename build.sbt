@@ -91,7 +91,11 @@ libraryDependencies ++= Seq(
 // コンパイル時にドキュメントを含めない
 // こうすると、コンパイルがちょっと高速になるかもしれない
 // https://www.playframework.com/documentation/2.5.x/SBTCookbook#Disable-documentation
-sources in(Compile, doc) := Seq.empty
+// sources in(Compile, doc) := Seq.empty
+
+// クラス図を生成できる
+// http://nantonaku-shiawase.hatenablog.com/entry/2013/12/04/010355
+// scalacOptions in(Compile, doc) ++= Seq("-groups", "-implicits", "-diagrams")
 
 // Artifact作成時にドキュメントを含めない
 // こうすると、Artifact作成がちょっと高速になるかもしれない
