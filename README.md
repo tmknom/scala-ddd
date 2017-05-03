@@ -59,6 +59,12 @@ activator cpd
 activator dependencyUpdates
 ```
 
+### 依存ライブラリの脆弱性チェック
+
+```bash
+activator dependencyCheck
+```
+
 ### コードの統計情報取得
 
 ```bash
