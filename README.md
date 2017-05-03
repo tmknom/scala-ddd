@@ -47,6 +47,13 @@ activator scalastyle
 activator dependencyUpdates
 ```
 
+### コードの統計情報取得
+
+```bash
+activator stats
+```
+
+
 ## Installation
 
 ```bash

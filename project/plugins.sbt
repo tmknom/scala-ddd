@@ -57,3 +57,8 @@ addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.0.3")
   * @see https://github.com/rtimush/sbt-updates
   */
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.0")
+
+/**
+  * プロジェクトの統計情報取得
+  */
+addSbtPlugin("com.orrsella" % "sbt-stats" % "1.0.5")
