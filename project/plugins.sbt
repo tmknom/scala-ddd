@@ -38,6 +38,16 @@ addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.0")
 addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.1.0")
 
 /**
+  * がバレッジ＆静的解析：Codacy
+  *
+  * 事前準備として Codacy 上で発行したトークンを CirclecCI の Environment Variables に
+  * CODACY_PROJECT_TOKEN という名前で保存しておく必要がある。
+  *
+  * @see https://github.com/codacy/sbt-codacy-coverage
+  */
+addSbtPlugin("com.codacy" % "sbt-codacy-coverage" % "1.3.8")
+
+/**
   * 静的解析ツール：Scalastyle
   *
   * @see http://www.scalastyle.org/sbt.html
