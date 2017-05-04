@@ -5,6 +5,8 @@ import java.time.{LocalDateTime, ZoneId}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.play.PlaySpec
 
+import scala.util.control.Exception.ultimately
+
 class DateTimeProviderSpec extends PlaySpec with BeforeAndAfterEach {
   private val FixedDateTime = LocalDateTime.of(2016, 12, 31, 23, 59, 59) // scalastyle:ignore
 
@@ -21,9 +23,13 @@ class DateTimeProviderSpec extends PlaySpec with BeforeAndAfterEach {
     * テストケースごとに現在日時をリセットする
     */
   override def afterEach(): Unit = {
-    try {
+    withFinally {
       super.afterEach() // To be stackable, must call super.afterEach
-    } finally {
+    }
+  }
+
+  private def withFinally = {
+    ultimately {
       DateTimeProvider.useSystemClockForTest()
     }
   }

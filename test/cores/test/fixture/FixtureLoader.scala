@@ -1,6 +1,7 @@
 package cores.test.fixture
 
 import scala.io.Source
+import scala.util.control.Exception.ultimately
 
 /**
   * Fixtureをロードするユーティリティクラス
@@ -19,9 +20,13 @@ object FixtureLoader {
     */
   def load(path: String): String = {
     val source = Source.fromInputStream(getClass.getResourceAsStream(path))
-    try {
+    withFinally(source: Source) {
       source.mkString
-    } finally {
+    }
+  }
+
+  private def withFinally(source: Source) = {
+    ultimately {
       source.close()
     }
   }

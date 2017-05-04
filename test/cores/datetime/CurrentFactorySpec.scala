@@ -5,6 +5,8 @@ import java.time._
 import org.scalatest.{BeforeAndAfterEach, Suite}
 import org.scalatestplus.play.PlaySpec
 
+import scala.util.control.Exception.ultimately
+
 class CurrentFactorySpec extends PlaySpec with FixedDateTime {
 
   override def createZonedDateTime(): ZonedDateTime = { defaultZonedDateTime() }
@@ -75,9 +77,13 @@ trait FixedDateTime extends BeforeAndAfterEach {
     * テストケースごとに現在日時をリセットする
     */
   override def afterEach(): Unit = {
-    try {
+    withFinally {
       super.afterEach() // To be stackable, must call super.afterEach
-    } finally {
+    }
+  }
+
+  private def withFinally = {
+    ultimately {
       CurrentFactory.resetForTest()
     }
   }

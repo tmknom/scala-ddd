@@ -5,6 +5,8 @@ import org.scalatestplus.play.{OneAppPerSuite, PlaySpec}
 import play.api.db.DBApi
 import play.api.db.evolutions.Evolutions
 
+import scala.util.control.Exception._
+
 /**
   * データベースとの結合テスト用trait
   *
@@ -44,19 +46,21 @@ trait DatabaseSpec extends PlaySpec with OneAppPerSuite with BeforeAndAfterEach 
   /**
     * テスト実行後に、cleanupマイグレーションを実行し、DBをクリア
     */
+
   override def afterEach(): Unit = {
-    try {
-      // beforeEachメソッドの構文同様、BeforeAndAfterEachの定義を読むと推奨されてるっぽい書き方。
-      // afterEachメソッドでは、リソースの開放処理などが行われることが多いので
-      // 別のtraitで例外が発生しても確実に、処理が実行できるようtry-finally構文で書くんだと思われる。
-      super.afterEach() // To be stackable, must call super.afterEach
-    } finally {
+    withFinally {
+      super.afterEach()
+    }
+  }
+
+  // Javaで言うfinallyだぞ
+  // http://seratch.hatenablog.jp/entry/20111126/1322309305
+  private def withFinally = {
+    ultimately {
       Evolutions.cleanupEvolutions(databaseApi.database("default"))
     }
   }
 
-  /**
-    * ここから下は、Google Guiceのinjectionをテスト内で実行するためのおまじない
-    */
+  // Google Guiceのinjectionをテスト内で実行するためのおまじない
   private lazy val databaseApi: DBApi = app.injector.instanceOf[DBApi] //here is the important line
 }
