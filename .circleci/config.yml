@@ -19,26 +19,29 @@ jobs:
     working_directory: "/opt/app"
     steps:
       - checkout
+      # CircleCI の Environment Variables に CACHE_KEY という名前で、適当な値を保存しておく。
+      # キャッシュをリフレッシュしたい場合は、設定した CACHE_KEY の値を CircleCI 上で変更する。
+      # http://engineer.crowdworks.jp/entry/2017/04/04/202719
       - restore_cache:
           name: Restoring cache - sbt
           keys:
-            - sbt-{{ checksum "build.sbt" }}-{{ checksum "project/plugins.sbt" }}
-            - sbt-
+            - sbt-{{ .Environment.CACHE_KEY }}-{{ checksum "build.sbt" }}
+            - sbt-{{ .Environment.CACHE_KEY }}-
       - restore_cache:
           name: Restoring cache - ivy2
           keys:
-            - ivy2-{{ checksum "build.sbt" }}-{{ checksum "project/plugins.sbt" }}
-            - ivy2-
+            - ivy2-{{ .Environment.CACHE_KEY }}-{{ checksum "build.sbt" }}
+            - ivy2-{{ .Environment.CACHE_KEY }}-
       - restore_cache:
           name: Restoring cache - target
           keys:
-            - target-{{ checksum "build.sbt" }}-{{ checksum "project/plugins.sbt" }}
-            - target-
+            - target-{{ .Environment.CACHE_KEY }}-{{ checksum "build.sbt" }}
+            - target-{{ .Environment.CACHE_KEY }}-
       - restore_cache:
           name: Restoring cache - project/target
           keys:
-            - project-{{ checksum "build.sbt" }}-{{ checksum "project/plugins.sbt" }}
-            - project-
+            - project-{{ .Environment.CACHE_KEY }}-{{ checksum "build.sbt" }}
+            - project-{{ .Environment.CACHE_KEY }}-
       - run:
           name: Check directory
           command: |
@@ -81,22 +84,22 @@ jobs:
             fi
       - save_cache:
           name: Saving cache - sbt
-          key: sbt-{{ checksum "build.sbt" }}-{{ checksum "project/plugins.sbt" }}
+          key: sbt-{{ .Environment.CACHE_KEY }}-{{ checksum "build.sbt" }}
           paths:
             - "~/.sbt"
       - save_cache:
           name: Saving cache - ivy2
-          key: ivy2-{{ checksum "build.sbt" }}-{{ checksum "project/plugins.sbt" }}
+          key: ivy2-{{ .Environment.CACHE_KEY }}-{{ checksum "build.sbt" }}
           paths:
             - "~/.ivy2"
       - save_cache:
           name: Saving cache - target
-          key: target-{{ checksum "build.sbt" }}-{{ checksum "project/plugins.sbt" }}
+          key: target-{{ .Environment.CACHE_KEY }}-{{ checksum "build.sbt" }}
           paths:
             - "/opt/app/target"
       - save_cache:
           name: Saving cache - project/target
-          key: project-{{ checksum "build.sbt" }}-{{ checksum "project/plugins.sbt" }}
+          key: project-{{ .Environment.CACHE_KEY }}-{{ checksum "build.sbt" }}
           paths:
             - "/opt/app/project/target"
       - store_test_results:
