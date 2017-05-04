@@ -1,4 +1,4 @@
-package cores.execution_context
+package cores.traceable
 
 import play.api.mvc.{ActionBuilder, Request, Result}
 
@@ -12,10 +12,10 @@ import scala.concurrent.{ExecutionContext, Future}
   *
   * def index: = MDCAction { ... }
   */
-object MDCAction extends ActionBuilder[Request] {
+object TraceableAction extends ActionBuilder[Request] {
   override def invokeBlock[A](request: Request[A], block: (Request[A]) => Future[Result]): Future[Result] = {
     block(request)
   }
 
-  override protected def executionContext: ExecutionContext = MDCHttpExecution.defaultContext
+  override protected def executionContext: ExecutionContext = TraceableExecution.defaultContext
 }

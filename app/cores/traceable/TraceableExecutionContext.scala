@@ -1,4 +1,4 @@
-package cores.execution_context
+package cores.traceable
 
 import java.util.Map
 
@@ -17,20 +17,20 @@ import scala.concurrent.{ExecutionContext, ExecutionContextExecutor}
   * @see http://qiita.com/castersupermild/items/b5682828307430e2cc9a
   * @see http://yanns.github.io/blog/2014/05/04/slf4j-mapped-diagnostic-context-mdc-with-play-framework/
   */
-private[execution_context] object MDCHttpExecutionContext {
+private[traceable] object TraceableExecutionContext {
 
   /**
     * Create an MDCHttpExecutionContext with values from the current thread.
     */
   def fromThread(delegate: ExecutionContext): ExecutionContextExecutor =
-    new MDCHttpExecutionContext(MDC.getCopyOfContextMap, delegate)
+    new TraceableExecutionContext(MDC.getCopyOfContextMap, delegate)
 }
 
 /**
   * Manages execution to ensure that the given MDC context are set correctly
   * in the current thread. Actual execution is performed by a delegate ExecutionContext.
   */
-private[execution_context] final class MDCHttpExecutionContext(mdcContext: Map[String, String], delegate: ExecutionContext) extends ExecutionContextExecutor {
+private[traceable] final class TraceableExecutionContext(mdcContext: Map[String, String], delegate: ExecutionContext) extends ExecutionContextExecutor {
   def execute(runnable: Runnable): Unit = delegate.execute(new Runnable {
     def run() {
       val oldMDCContext = MDC.getCopyOfContextMap

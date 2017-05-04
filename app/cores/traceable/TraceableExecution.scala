@@ -1,4 +1,4 @@
-package cores.execution_context
+package cores.traceable
 
 import play.api.libs.concurrent.Execution
 
@@ -10,12 +10,12 @@ import scala.concurrent.ExecutionContext
   * This custom [[ExecutionContext]] propagates the MDC context, so that the request
   * and the correlation IDs can be logged.
   */
-private[execution_context] object MDCHttpExecution {
+private[traceable] object TraceableExecution {
 
   object Implicits {
-    implicit def defaultContext: ExecutionContext = MDCHttpExecution.defaultContext
+    implicit def defaultContext: ExecutionContext = TraceableExecution.defaultContext
   }
 
-  def defaultContext: ExecutionContext = MDCHttpExecutionContext.fromThread(Execution.defaultContext)
+  def defaultContext: ExecutionContext = TraceableExecutionContext.fromThread(Execution.defaultContext)
 
 }
