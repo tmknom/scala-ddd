@@ -40,7 +40,7 @@ class HatenaBookmarkServiceSpec extends PlaySpec with MockitoSugar {
     def mockHatenaBookmarkApi(): HatenaBookmarkApi = {
       // Mockが返す値を作成
       val response: Future[String] = Future {
-        FixtureLoader.load(FixturePath.HATENA_BOOKMARK_RSS)
+        FixtureLoader.load(FixturePath.HatenaBookmarkRss)
       }
 
       // Mockが返す値をセット

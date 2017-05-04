@@ -10,7 +10,7 @@ class HatenaBookmarkParserImplSpec extends PlaySpec {
 
   "parse" should {
     "success" in {
-      val rss = FixtureLoader.load(FixturePath.HATENA_BOOKMARK_RSS)
+      val rss = FixtureLoader.load(FixturePath.HatenaBookmarkRss)
       val actual = sut.parse(rss)
 
       actual.size mustBe 30
