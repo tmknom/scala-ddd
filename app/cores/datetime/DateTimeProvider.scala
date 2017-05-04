@@ -34,7 +34,7 @@ object DateTimeProvider {
   /**
     * システムのデフォルトタイームゾーンID
     */
-  private val DEFAULT_ZONE_ID: ZoneId = ZoneId.systemDefault()
+  private val DefaultZoneId: ZoneId = ZoneId.systemDefault()
 
   /**
     * 現在日時の取得
@@ -42,7 +42,7 @@ object DateTimeProvider {
     * @return 現在日時
     */
   def now(): LocalDateTime = {
-    now(DEFAULT_ZONE_ID).toLocalDateTime
+    now(DefaultZoneId).toLocalDateTime
   }
 
   /**
@@ -63,7 +63,7 @@ object DateTimeProvider {
     * @param localDateTime 固定する現在日時
     */
   def useFixedClockForTest(localDateTime: LocalDateTime): Unit = {
-    useFixedClockForTest(localDateTime, DEFAULT_ZONE_ID)
+    useFixedClockForTest(localDateTime, DefaultZoneId)
   }
 
   /**
