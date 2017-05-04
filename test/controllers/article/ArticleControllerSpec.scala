@@ -20,7 +20,7 @@ class ArticleControllerSpec extends ControllerSpec {
         val json = route(mockApp, FakeRequest(GET, "/articles")).get
 
         status(json) mustBe OK
-        contentAsString(json) mustBe "\"empty\""
+        contentAsString(json) mustBe "[]"
       }
     }
 
@@ -30,9 +30,14 @@ class ArticleControllerSpec extends ControllerSpec {
       // テスト実行
       "success" in {
         val json = route(mockApp, FakeRequest(GET, "/articles")).get
+        val expected =
+          """[{
+            |  "title": "sample_title",
+            |  "url": "sample_url"
+            |}]""".stripMargin
 
         status(json) mustBe OK
-        contentAsString(json) mustBe "\"sample_title\"" // """sample_title"""
+        contentAsString(json) mustBe expected
       }
     }
   }

@@ -14,7 +14,7 @@ class IntegrationSpec extends PlaySpec with OneServerPerTest with OneBrowserPerT
 
       go to ("http://localhost:" + port.toString + "/articles")
 
-      pageSource must include ("empty")
+      pageSource must include ("[]")
     }
   }
 }
