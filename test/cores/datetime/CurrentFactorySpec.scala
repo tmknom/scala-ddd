@@ -56,9 +56,9 @@ trait FixedDateTime extends BeforeAndAfterEach {
     * デフォルトの固定日時
     */
   def defaultZonedDateTime(): ZonedDateTime = {
-    ZonedDateTime.of(DEFAULT_LOCAL_DATE_TIME, ZoneId.systemDefault)
+    ZonedDateTime.of(DefaultLocalDateTime, ZoneId.systemDefault)
   }
-  private val DEFAULT_LOCAL_DATE_TIME = LocalDateTime.of(2016, 12, 31, 23, 59, 59) // scalastyle:ignore
+  private val DefaultLocalDateTime = LocalDateTime.of(2016, 12, 31, 23, 59, 59) // scalastyle:ignore
 
   /**
     * テストケースごとに現在日時を固定する
