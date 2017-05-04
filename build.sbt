@@ -77,6 +77,10 @@ libraryDependencies ++= Seq(
   // wsよりコッチを使うほうが推奨されているっぽい
   // http://qiita.com/bigwheel/items/44cb874ced4be204c09c
   "net.databinder.dispatch" %% "dispatch-core" % "0.12.0",
+  // JSON変換用ライブラリ
+  // Scala オブジェクトから JSON にいい感じに変換してくれる
+  // http://arata.hatenadiary.com/entry/2015/02/11/015916
+  "io.spray" %%  "spray-json" % "1.3.3",
 
   // ちゃんと調べてないけど、こっから下はテスト用だと思われる
   //
