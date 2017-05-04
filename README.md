@@ -71,6 +71,15 @@ activator dependencyCheck
 activator stats
 ```
 
+### 依存関係のグラフの画像出力
+
+[graphviz](http://www.graphviz.org/) 必須。
+
+```bash
+activator dependencyDot
+dot -Kdot -Tpng target/dependencies-compile.dot -o target/dependencies-compile.png
+```
+
 
 ## Installation
 

@@ -74,6 +74,8 @@ addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.0")
 
 /**
   * 依存ライブラリの脆弱性チェック
+  *
+  * @see https://github.com/albuch/sbt-dependency-check
   */
 addSbtPlugin("net.vonbuchholtz" % "sbt-dependency-check" % "0.1.7")
 
@@ -83,3 +85,10 @@ addSbtPlugin("net.vonbuchholtz" % "sbt-dependency-check" % "0.1.7")
   * @see https://github.com/orrsella/sbt-stats
   */
 addSbtPlugin("com.orrsella" % "sbt-stats" % "1.0.5")
+
+/**
+  * 依存関係の描画
+  *
+  * @see https://github.com/jrudolph/sbt-dependency-graph
+  */
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.8.2")

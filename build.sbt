@@ -263,3 +263,8 @@ dependencyUpdatesFailBuild := true
   * sbt-dependency-check の出力先を変更
   */
 dependencyCheckOutputDirectory := Some(file("target/analysis/"))
+
+/**
+  * sbt-dependency-graph の依存関係の表示から Scala 本体を除外
+  */
+filterScalaLibrary := false
