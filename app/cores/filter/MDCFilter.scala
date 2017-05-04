@@ -3,6 +3,7 @@ package cores.filter
 import javax.inject.{Inject, Singleton}
 
 import akka.stream.Materializer
+import cores.log.MdcKey
 import cores.request.RequestHeaderTagName
 import org.slf4j.MDC
 import play.api.mvc.{Filter, RequestHeader, Result}
@@ -19,24 +20,13 @@ final class MDCFilter @Inject()(implicit override val mat: Materializer,
   def apply(nextFilter: RequestHeader => Future[Result])
            (requestHeader: RequestHeader): Future[Result] = {
 
-    MDC.put(MDCKey.RequestId, requestHeader.tags(RequestHeaderTagName.RequestId))
+    MDC.put(MdcKey.RequestId, requestHeader.tags(RequestHeaderTagName.RequestId))
 
     nextFilter(requestHeader).map { result =>
       // MDCは内部的にスレッドローカルを使って実装されている
       // そのため、忘れずに削除しないとメモリリークする可能性がある
-      MDC.remove(MDCKey.RequestId)
+      MDC.remove(MdcKey.RequestId)
       result
     }
   }
-}
-
-/**
-  * logback の MDC(Mapped Diagnostic Context) のキー名を定義
-  *
-  * logback.xml の pattern 部に %X{requestId} のように記述する
-  *
-  * @see https://logback.qos.ch/manual/mdc.html
-  */
-private[filter] object MDCKey {
-  val RequestId: String = "requestId"
 }
