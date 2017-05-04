@@ -2,6 +2,7 @@ package controllers.crawler
 
 import javax.inject._
 
+import cores.traceable.TraceableAction
 import play.api.libs.json.Json
 import play.api.mvc._
 import services.crawler.HatenaBookmarkService
@@ -9,7 +10,7 @@ import services.crawler.HatenaBookmarkService
 @Singleton
 class CrawlRssController @Inject() (hatenaBookmarkService: HatenaBookmarkService) extends Controller {
 
-  def create: Action[AnyContent] = Action {
+  def create: Action[AnyContent] = TraceableAction {
     val articleEntities = hatenaBookmarkService.crawl()
     println(articleEntities.size) // scalastyle:ignore
 
