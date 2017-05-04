@@ -2,6 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/tmknom/scala-ddd/tree/master.svg?style=svg)](https://circleci.com/gh/tmknom/scala-ddd/tree/master)
 [![Coverage Status](https://coveralls.io/repos/github/tmknom/scala-ddd/badge.svg?branch=master)](https://coveralls.io/github/tmknom/scala-ddd?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/2f12ab859a1d41f2aaf95748741125b6)](https://www.codacy.com/app/tmknom/scala-ddd)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2f12ab859a1d41f2aaf95748741125b6)](https://www.codacy.com/app/tmknom/scala-ddd)
 
 
 ## Description
