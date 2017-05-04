@@ -30,7 +30,7 @@ addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.0")
 /**
   * カバレッジ表示：Coveralls
   *
-  * 事前準備として coveralls 上で発行したトークンを CirclecCI の Environment Variables に
+  * 事前準備として coveralls 上で発行したトークンを CircleCI の Environment Variables に
   * COVERALLS_REPO_TOKEN という名前で保存しておく必要がある。
   *
   * @see https://github.com/scoverage/sbt-coveralls
