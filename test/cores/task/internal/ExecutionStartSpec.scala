@@ -4,6 +4,8 @@ import cores.task.Task
 import org.scalatestplus.play.PlaySpec
 import play.api.{Application, Logger}
 
+import scala.util.control.Exception.{Catch, ultimately}
+
 class ExecutionStartSpec extends PlaySpec {
   "ExecutionStart#start" should {
     "例外が起きないこと" in {
@@ -17,6 +19,8 @@ class ExecutionStartSpec extends PlaySpec {
     override def execute(app: Application): Unit = {
       Logger.trace("test")
     }
+
+    override protected def withExit: Catch[Unit] = ultimately[Unit]{}
   }
 
 }

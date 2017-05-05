@@ -6,6 +6,7 @@ import org.slf4j.MDC
 import play.api.{Application, Logger, Play}
 
 import scala.util.control.Exception.{Catch, ultimately}
+import scala.util.{Failure, Success, Try}
 
 /**
   * アプリケーションの実行
@@ -21,7 +22,14 @@ private[task] object ExecutionStart {
   def start(execution: Execution): Unit = {
     val app: Application = startApplication()
     withCleanup(app) {
-      execution.execute(app)
+      executeQuietly(execution, app)
+    }
+  }
+
+  private def executeQuietly(execution: Execution, app: Application): Unit = {
+    Try(execution.execute(app)) match {
+      case Success(_) => Logger.info(s"${execution.getClass.getSimpleName} is success.")
+      case Failure(e) => Logger.error(s"${execution.getClass.getSimpleName} is error!", e)
     }
   }
 
