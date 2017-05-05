@@ -1,5 +1,6 @@
 package cores.traceable
 
+import cores.traceable.internal.TraceableExecution
 import play.api.mvc.{ActionBuilder, Request, Result}
 
 import scala.concurrent.{ExecutionContext, Future}
