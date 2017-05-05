@@ -10,9 +10,6 @@ import java.time.{Clock, ZoneId, ZonedDateTime}
   *
   * 現在日時の取得は必ず本クラスを介して行うこと。
   * 標準の「ZonedDateTime.now()」などを使うと、テスト時に現在時刻を固定できなくなるので注意。
-  *
-  * その他、本クラス導入の経緯については下記に記述している。
-  * https://crowdworks.qiita.com/tmknom/items/e5283726dafc106307ad
   */
 object DateTimeProvider {
   /**
