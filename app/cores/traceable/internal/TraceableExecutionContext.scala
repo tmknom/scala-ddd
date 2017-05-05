@@ -5,6 +5,7 @@ import java.util.Map
 import org.slf4j.MDC
 
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutor}
+import scala.util.control.Exception.{Catch, ultimately}
 
 /**
   * slf4j provides a MDC [[http://logback.qos.ch/manual/mdc.html Mapped Diagnostic Context]]
@@ -35,10 +36,8 @@ private[internal] final class TraceableExecutionContext(mdcContext: Map[String, 
     def run() {
       val oldMDCContext = MDC.getCopyOfContextMap
       setContextMap(mdcContext)
-      try {
+      withResetContext(oldMDCContext) {
         runnable.run()
-      } finally {
-        setContextMap(oldMDCContext)
       }
     }
   })
@@ -47,6 +46,12 @@ private[internal] final class TraceableExecutionContext(mdcContext: Map[String, 
     Option(context) match {
       case Some(c) => MDC.setContextMap(c)
       case None => MDC.clear()
+    }
+  }
+
+  private def withResetContext(context: Map[String, String]): Catch[Unit] = {
+    ultimately[Unit] {
+      setContextMap(context)
     }
   }
 
