@@ -1,4 +1,4 @@
-package cores.traceable
+package cores.traceable.internal
 
 import play.api.libs.concurrent.Execution
 
