@@ -7,9 +7,6 @@ import play.api.mvc.{RequestHeader, Result}
 
 /**
   * HTTPリクエストの開始／終了のロガー
-  *
-  * @todo ログ出力メッセージとかログレベルは別途検討
-  *       https://github.com/crowdworksjp/blues/issues/51
   */
 private[filter] object RequestLogger {
 

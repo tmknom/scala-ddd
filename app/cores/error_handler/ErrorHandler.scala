@@ -1,15 +1,14 @@
 package cores.error_handler
 
-import java.util.UUID
 import javax.inject.{Inject, Provider, Singleton}
 
+import cores.error_handler.internal.{ErrorLogger, ErrorNotification, ErrorRenderer}
+import play.api._
 import play.api.http.DefaultHttpErrorHandler
 import play.api.http.Status.INTERNAL_SERVER_ERROR
+import play.api.mvc.Results.InternalServerError
 import play.api.mvc.{RequestHeader, Result}
 import play.api.routing.Router
-import play.api._
-import play.api.libs.json.{JsObject, Json}
-import play.api.mvc.Results.InternalServerError
 
 import scala.concurrent.Future
 
@@ -17,92 +16,66 @@ import scala.concurrent.Future
   * エラーハンドラー
   *
   * 例外がスローされると最終的にここでハンドリングを行う。
-  * https://www.playframework.com/documentation/2.5.x/ScalaErrorHandling#Extending-the-default-error-handler
-  *
-  * 例外ハンドラーの責務は3つ
+  * 例外ハンドラーの主な責務は3つ。
   * ・エラーJSONを返す
   * ・エラーログを出力する
   * ・エラーを通知する
   *
-  * @param env The environment for the application.
-  * @param config A full configuration set.
+  * 本エラーハンドラーを使用するようアプリケーションに組み込むには、明示的に設定ファイルへの記述が必要。
+  * 多くの場合 conf/application.conf ファイルに記述することになる。
+  * 設定箇所は play.http の errorHandler の項目である。
+  *
+  * @see https://www.playframework.com/documentation/2.5.x/ScalaErrorHandling#Extending-the-default-error-handler
+  * @param env          The environment for the application.
+  * @param config       A full configuration set.
   * @param sourceMapper provides source code to be displayed on error pages
-  * @param router A router.
+  * @param router       A router.
   */
 @Singleton
-class ErrorHandler @Inject() (
-                               env: Environment,
-                               config: Configuration,
-                               sourceMapper: OptionalSourceMapper,
-                               router: Provider[Router]
-                             ) extends DefaultHttpErrorHandler(env, config, sourceMapper, router) {
+final class ErrorHandler @Inject()(
+                                    env: Environment,
+                                    config: Configuration,
+                                    sourceMapper: OptionalSourceMapper,
+                                    router: Provider[Router]
+                                  ) extends DefaultHttpErrorHandler(env, config, sourceMapper, router) {
 
   /**
-    * Invoked in dev mode when a server error occurs.
+    * 本番環境でサーバーエラーが発生したときに実行
     *
-    * @param request The request that triggered the error.
-    * @param exception The exception.
-    */
-  override protected def onDevServerError(request: RequestHeader, exception: UsefulException): Future[Result] = {
-    val id = UUID.randomUUID
-    ErrorLogger.log(request, exception, id)
-    ErrorResponse.responseInternalServerError(exception, INTERNAL_SERVER_ERROR, id)
-  }
-
-  /**
-    * Invoked in prod mode when a server error occurs.
-    *
-    * @param request The request that triggered the error.
-    * @param exception The exception.
+    * @param request   リクエストヘッダー
+    * @param exception スローされた例外
     */
   override protected def onProdServerError(request: RequestHeader, exception: UsefulException): Future[Result] = {
-    val id = UUID.randomUUID
-    ErrorLogger.log(request, exception, id)
-    ErrorResponse.responseInternalServerError(exception, INTERNAL_SERVER_ERROR, id)
-  }
-}
-
-/**
-  * エラーJSONを返すクラス
-  */
-object ErrorResponse {
-  /**
-    * InternalServerError を返す
-    *
-    * @param throwable The exception.
-    * @param statusCode The error status code.
-    */
-  def responseInternalServerError(throwable: Throwable, statusCode: Int, id: UUID): Future[Result] = {
+    ErrorNotification.notify(request, exception)
     Future.successful(InternalServerError(
-      createErrorJson(throwable, statusCode, id)
+      ErrorRenderer.render(exception, INTERNAL_SERVER_ERROR)
     ))
   }
 
-  private def createErrorJson(throwable: Throwable, statusCode: Int, id: UUID): JsObject = {
-    Json.obj(
-      "errors" -> Json.arr(
-        Json.obj(
-          "id" -> id,
-          "statusCode" -> statusCode.toString,
-          "message" -> throwable.getMessage
-        )
-      )
-    )
-  }
-}
-
-/**
-  * エラーログを出力するクラス
-  */
-object ErrorLogger {
   /**
-    * エラーログを出力する
+    * 開発環境でサーバーエラーが発生したときに実行
     *
-    * @param request The HTTP request header.
-    * @param exception The exception.
+    * とりあえず本番環境と同じ処理をすることにしているが、
+    * 開発環境だけ、ハンドリング方法を変更することも可能。
+    * たぶんデバッグしやすいようにカスタマイズできる余地を残しているんだと思う。
+    *
+    * @param request   リクエストヘッダー
+    * @param exception スローされた例外
     */
-  def log(request: RequestHeader, exception: UsefulException, id: UUID): Unit = {
-    val message: String = s"$id - Production Error while processing request. Returning $INTERNAL_SERVER_ERROR for ${request.uri}"
-    Logger.error(message, exception)
+  override protected def onDevServerError(request: RequestHeader, exception: UsefulException): Future[Result] = {
+    onProdServerError(request, exception)
+  }
+
+  /**
+    * エラーログの出力
+    *
+    * UsefulException しかログ出力してくれないが、それでいいんかいなって気持ちになる。
+    * このメソッドをオーバーライドするんじゃなくて、フツーにログ出力処理を呼び出したほうがいいかもしれない。
+    *
+    * @param request         リクエストヘッダー
+    * @param usefulException スローされた例外
+    */
+  override protected def logServerError(request: RequestHeader, usefulException: UsefulException) {
+    ErrorLogger.error(request, usefulException)
   }
 }
