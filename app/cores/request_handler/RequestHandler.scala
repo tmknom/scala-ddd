@@ -44,6 +44,7 @@ final class RequestHandler @Inject()(router: Router,
     * @return The possibly modified/tagged request, and a handler to handle it
     */
   override def handlerForRequest(request: RequestHeader): (RequestHeader, Handler) = {
-    super.handlerForRequest(RequestInitializer.initialize(request))
+    val taggedRequest: RequestHeader = RequestInitializer.initialize(request)
+    super.handlerForRequest(taggedRequest)
   }
 }
