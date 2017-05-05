@@ -15,6 +15,6 @@ private[error_handler] object ErrorNotification {
     * @param throwable     スローされた例外
     */
   def notify(requestHeader: RequestHeader, throwable: Throwable): Unit = {
-    Logger.trace(s"please implement me! - ${this.getClass.getSimpleName}#notify")
+    Logger.trace(s"please implement me! - ${requestHeader.toString} ${throwable.toString}")
   }
 }

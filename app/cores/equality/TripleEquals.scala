@@ -13,7 +13,7 @@ package cores.equality
   * @see http://www.scalautils.org/user_guide/CustomEquality
   */
 object TripleEquals {
-  @SuppressWarnings(Array("org.wartremover.warts.Equals"))
+  @SuppressWarnings(Array("org.wartremover.warts.Equals", "AvoidOperatorOverload"))
   implicit final class AnyOps[A](self: A) {
     def ===(other: A): Boolean = self == other // scalastyle:ignore
   }
