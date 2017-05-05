@@ -91,10 +91,10 @@ jobs:
               activator "scapegoat"
             fi
       - run:
-          name: Dependency check
+          name: Dependency updates
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              activator "dependencyCheck"
+              activator "dependencyUpdates"
             fi
       - run:
           name: Scaladoc
