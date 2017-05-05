@@ -1,6 +1,6 @@
 package cores.filter.internal
 
-import cores.request.RequestHeaderTagName
+import cores.internal.constant.RequestHeaderTagName
 import play.api.Logger
 import play.api.libs.json.Json
 import play.api.mvc.{RequestHeader, Result}

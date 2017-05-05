@@ -1,4 +1,4 @@
-package cores.log
+package cores.internal.constant
 
 /**
   * logback の MDC(Mapped Diagnostic Context) のキー名を定義

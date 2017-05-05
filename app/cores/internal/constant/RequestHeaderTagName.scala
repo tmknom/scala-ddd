@@ -1,4 +1,4 @@
-package cores.request
+package cores.internal.constant
 
 /**
   * リクエストヘッダーのタグ名を定数定義するクラス

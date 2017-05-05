@@ -1,5 +1,6 @@
 package cores.request
 
+import cores.internal.request.RequestId
 import org.scalatestplus.play.PlaySpec
 
 class RequestIdSpec extends PlaySpec {
