@@ -65,7 +65,7 @@ jobs:
           name: Test
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              activator coverage test coverageReport coveralls codacyCoverage;
+              activator clean coverage test coverageReport coveralls codacyCoverage
             else
               activator coverage test
             fi
