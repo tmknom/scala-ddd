@@ -1,7 +1,7 @@
 package cores.request_handler.internal
 
 import cores.internal.constant.RequestHeaderTagName
-import cores.request.RequestId
+import cores.internal.request.RequestId
 import play.api.mvc.RequestHeader
 
 /**

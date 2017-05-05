@@ -1,7 +1,7 @@
 package cores.task.internal
 
 import cores.internal.constant.MdcKey
-import cores.request.RequestId
+import cores.internal.request.RequestId
 import org.slf4j.MDC
 import play.api.{Application, Logger, Play}
 
