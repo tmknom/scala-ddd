@@ -34,7 +34,7 @@ javaOptions in Test += "-Dlogger.resource=logback-test.xml"
   *
   * @see http://stackoverflow.com/questions/21464673/sbt-trapexitsecurityexception-thrown-at-sbt-run
   */
-fork in run := true
+// fork in run := true
 
 // 依存ライブラリ
 // 定期的にバージョンアップしたい
