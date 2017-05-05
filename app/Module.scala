@@ -7,7 +7,7 @@ import infrastructures.article._
 import infrastructures.crawler._
 import services.article._
 import services.crawler._
-import services.{ApplicationTimer, AtomicCounter, Counter}
+import services.{ApplicationTimer}
 
 /**
  * This class is a Guice module that tells Guice how to bind several
@@ -41,8 +41,6 @@ class Module extends AbstractModule {
     // Ask Guice to create an instance of ApplicationTimer when the
     // application starts.
     bind(classOf[ApplicationTimer]).asEagerSingleton()
-    // Set AtomicCounter as the implementation for Counter.
-    bind(classOf[Counter]).to(classOf[AtomicCounter])
 
     // とりあえずレイヤ単位でメソッドを切っておく
     configureServices()
