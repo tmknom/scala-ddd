@@ -76,10 +76,30 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               mkdir -p target/analysis/
-              activator "cpd"
-              activator "scapegoat"
-              activator "dependencyCheck"
               activator -no-colors "stats" > target/analysis/statistics.txt
+            fi
+      - run:
+          name: CPD
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              activator "cpd"
+            fi
+      - run:
+          name: Scapegoat
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              activator "scapegoat"
+            fi
+      - run:
+          name: Dependency check
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              activator "dependencyCheck"
+            fi
+      - run:
+          name: Scaladoc
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
               activator "doc"
             fi
       - save_cache:
