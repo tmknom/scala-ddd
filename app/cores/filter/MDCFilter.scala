@@ -3,8 +3,7 @@ package cores.filter
 import javax.inject.{Inject, Singleton}
 
 import akka.stream.Materializer
-import cores.internal.constant.MdcKey
-import cores.request.RequestHeaderTagName
+import cores.internal.constant.{MdcKey, RequestHeaderTagName}
 import org.slf4j.MDC
 import play.api.mvc.{Filter, RequestHeader, Result}
 
