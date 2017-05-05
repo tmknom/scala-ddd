@@ -1,11 +1,12 @@
 package cores.scalikejdbc
 
+import cores.scalikejdbc.internal.QueryListenerInitializer
 import play.api.inject.{Binding, Module}
 import play.api.{Configuration, Environment}
 
 final class QueryListenerModule extends Module {
   /**
-    * [[QueryListener]] を有効化
+    * [[cores.scalikejdbc.internal.QueryListener]] を有効化
     *
     * @param env    The environment
     * @param config The configuration
