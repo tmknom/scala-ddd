@@ -6,3 +6,6 @@
 GET /articles controllers.article.ArticleController.index
 # 雑にRSSのクローラをコントローラで
 POST /crawl/rss controllers.crawler.CrawlRssController.create
+
+# 必ずエラーが発生する
+GET /error cores.controller.ErrorController.index
