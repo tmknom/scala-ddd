@@ -2,7 +2,7 @@ package cores.task.internal
 
 import play.api.{Application, ApplicationLoader, Environment, Mode}
 
-private[internal] object ApplicationInitializer {
+private[task] object ApplicationInitializer {
   def initialize(): Application = {
     val environment = Environment(new java.io.File("."), this.getClass.getClassLoader, mode)
     val context = ApplicationLoader.createContext(environment)

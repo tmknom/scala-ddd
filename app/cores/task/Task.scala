@@ -1,8 +1,13 @@
 package cores.task
 
-import cores.task.internal.{Execution, ExecutionStart}
+import cores.task.internal.{ApplicationInjector, Execution, ExecutionStart}
 
-trait Task extends App with Execution {
-  // https://github.com/playframework/playframework/blob/2.5.x/framework/src/play-server/src/main/scala/play/core/server/ProdServerStart.scala
+/**
+  * コマンドラインから実行可能なアプリケーション
+  *
+  * バッチ処理などを実装したい場合は、
+  * 本クラスを extends したクラスを実装する。
+  */
+trait Task extends App with Execution with ApplicationInjector {
   ExecutionStart.start(this)
 }
