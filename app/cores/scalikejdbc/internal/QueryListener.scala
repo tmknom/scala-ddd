@@ -1,4 +1,4 @@
-package cores.scalikejdbc
+package cores.scalikejdbc.internal
 
 import play.api.Logger
 import play.api.libs.json.Json
@@ -13,7 +13,7 @@ import scalikejdbc.GlobalSettings.{QueryCompletionListener, QueryFailureListener
   *
   * @see http://scalikejdbc.org/documentation/query-inspector.html
   */
-object QueryListener {
+private[internal] object QueryListener {
   /**
     * マスク対象の文字列のプレフィックス
     */
