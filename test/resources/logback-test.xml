@@ -31,9 +31,9 @@
   <logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF" />
 
   <!-- テスト時にログ出力を抑制したい場合はこのあたりを調整する -->
-  <logger name="play" level="WARN" />
-  <logger name="application" level="WARN" />
-  <logger name="scalikejdbc" level="WARN"/>
+  <logger name="play" level="OFF" />
+  <logger name="application" level="OFF" />
+  <logger name="scalikejdbc" level="OFF"/>
 
   <root level="WARN">
     <appender-ref ref="ASYNCFILE" />
