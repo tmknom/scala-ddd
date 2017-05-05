@@ -27,6 +27,15 @@ resourceDirectory in Test := baseDirectory.value / "test/resources"
 // テスト時に読み込むlogbackの設定を切り替え
 javaOptions in Test += "-Dlogger.resource=logback-test.xml"
 
+/**
+  * fork して実行するよう設定
+  *
+  * これを書かないと Task 実行時に正常終了してくれない。
+  *
+  * @see http://stackoverflow.com/questions/21464673/sbt-trapexitsecurityexception-thrown-at-sbt-run
+  */
+fork in (Compile, run) := true
+
 // 依存ライブラリ
 // 定期的にバージョンアップしたい
 libraryDependencies ++= Seq(
