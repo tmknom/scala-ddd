@@ -147,7 +147,7 @@ publishArtifact in(Compile, packageSrc) := false
   */
 coverageExcludedPackages := Seq(
   "router\\.*",
-  "controllers\\..*Reverse.*"
+  ".*Reverse.*"
 ).mkString(";")
 
 /**
