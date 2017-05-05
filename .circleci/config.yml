@@ -67,7 +67,7 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               activator coverage test coverageReport coveralls codacyCoverage;
             else
-              activator "test"
+              activator coverage test
             fi
       - run:
           # ライン数などを取得

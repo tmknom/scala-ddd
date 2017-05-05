@@ -157,7 +157,7 @@ coverageFailOnMinimum := true
   *
   * @see https://github.com/scoverage/sbt-scoverage/blob/master/src/main/scala/scoverage/ScoverageSbtPlugin.scala#L30
   */
-coverageMinimum := 40
+coverageMinimum := 80
 
 /**
   * Scalastyleでテストコード側もデフォルトでチェックするよう設定
