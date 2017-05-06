@@ -1,6 +1,6 @@
 package infrastructures.tweet
 
-import java.time.ZonedDateTime
+import java.time.{ZoneId, ZonedDateTime}
 
 import domains.tweet.{TweetEntity, TweetRepository}
 import scalikejdbc._
@@ -19,7 +19,7 @@ class TweetRepositoryImpl extends SkinnyCRUDMapper[TweetEntity] with TweetReposi
     retweetCount = rs.int(rn.retweetCount),
     favoriteCount = rs.int(rn.favoriteCount),
     lang = rs.string(rn.lang),
-    createdDateTime = rs.get[ZonedDateTime](rn.createdDateTime)
+    createdDateTime = rs.zonedDateTime(rn.createdDateTime)
   )
 
   override def listAll(): Seq[TweetEntity] = findAll()
