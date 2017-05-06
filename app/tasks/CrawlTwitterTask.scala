@@ -1,7 +1,7 @@
 package tasks
 
 import cores.task.Task
-import domains.article.ArticleEntityJsonProtocol._
+import domains.tweet.TweetEntityJsonProtocol._
 import play.api.{Application, Logger}
 import services.crawler.TwitterService
 import spray.json._
@@ -14,7 +14,7 @@ import spray.json._
 object CrawlTwitterTask extends Task {
   override def execute(app: Application): Unit = {
     val twitterService = instanceOf[TwitterService](app)
-    val articleEntities = twitterService.crawl()
-    Logger.info(articleEntities.toJson.prettyPrint)
+    val tweetEntities = twitterService.crawl()
+    Logger.info(tweetEntities.toJson.prettyPrint)
   }
 }

@@ -1,29 +1,42 @@
 package infrastructures.crawler
 
+import java.time.{ZoneId, ZonedDateTime}
 import javax.inject.Singleton
 
 import com.typesafe.config.ConfigFactory
 import domains.crawler.TwitterApi
+import domains.tweet.TweetEntity
 import play.api.Logger
 import twitter4j.conf.{Configuration, ConfigurationBuilder}
 import twitter4j.{Query, Status, TwitterFactory}
 
 import scala.collection.JavaConverters._
 
-@SuppressWarnings(Array("org.wartremover.warts.ToString", "org.wartremover.warts.TraversableOps"))
 @Singleton
 class TwitterApiImpl extends TwitterApi {
-  override def request(): String = {
+  override def request(): Seq[TweetEntity] = {
     val query = new Query("#funny")
     val statuses = search(query)
 
-    val status = statuses.head
-    logStatus(status)
-    status.toString
+    statuses.map(convertTweetEntity)
   }
 
-  private def search(query: Query): List[Status] = {
-    twitterClient(configuration).search(query).getTweets.asScala.toList
+  private def convertTweetEntity(status: Status): TweetEntity = {
+    // logStatus(status)
+    TweetEntity(
+      None,
+      status.getId,
+      status.getUser.getScreenName,
+      status.getText,
+      status.getRetweetCount,
+      status.getFavoriteCount,
+      status.getLang,
+      ZonedDateTime.ofInstant(status.getCreatedAt.toInstant, ZoneId.systemDefault())
+    )
+  }
+
+  private def search(query: Query): Seq[Status] = {
+    twitterClient(configuration).search(query).getTweets.asScala
   }
 
   private def twitterClient(configuration: Configuration) = {
@@ -50,13 +63,13 @@ class TwitterApiImpl extends TwitterApi {
     Logger.warn(s"getRetweetCount=${status.getRetweetCount}")
     Logger.warn(s"getFavoriteCount=${status.getFavoriteCount}")
     Logger.warn(s"getUser.getScreenName=${status.getUser.getScreenName}")
-//    Logger.warn(s"isRetweeted=${status.isRetweeted}")
-//    Logger.warn(s"getMediaEntities=${status.getMediaEntities.head.toString}")
-//    Logger.warn(s"getSource=${status.getUserMentionEntities.head.toString}")
-//    Logger.warn(s"getSource=${status.getHashtagEntities.head.toString}")
-//    Logger.warn(s"getUser=${status.getUser.toString}")
-//    Logger.warn(s"getMediaEntities.length=${status.getMediaEntities.length}")
-//    Logger.warn(s"getUserMentionEntities.length=${status.getUserMentionEntities.length}")
-//    Logger.warn(s"getMediaEntities.length=${status.getMediaEntities.length}")
+    //    Logger.warn(s"isRetweeted=${status.isRetweeted}")
+    //    Logger.warn(s"getMediaEntities=${status.getMediaEntities.head.toString}")
+    //    Logger.warn(s"getSource=${status.getUserMentionEntities.head.toString}")
+    //    Logger.warn(s"getSource=${status.getHashtagEntities.head.toString}")
+    //    Logger.warn(s"getUser=${status.getUser.toString}")
+    //    Logger.warn(s"getMediaEntities.length=${status.getMediaEntities.length}")
+    //    Logger.warn(s"getUserMentionEntities.length=${status.getUserMentionEntities.length}")
+    //    Logger.warn(s"getMediaEntities.length=${status.getMediaEntities.length}")
   }
 }
