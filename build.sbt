@@ -212,7 +212,7 @@ testScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Compile).toT
   *
   * @see http://www.wartremover.org/doc/install-setup.html
   */
-wartremoverErrors in(Compile, compile) ++= Warts.allBut(Wart.Overloading)
+wartremoverWarnings in(Compile, compile) ++= Warts.allBut(Wart.Overloading)
 // 本当は右記のように書こうとした => wartremoverExcluded += baseDirectory.value / "conf" / "routes"
 // が、除外してくれなかったので、このような書き方に落ち着いた。たぶん、conf配下のファイルは扱いが特殊なんだろう。
 // http://stackoverflow.com/questions/34788530/wartremover-still-reports-warts-in-excluded-play-routes-file
