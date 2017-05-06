@@ -86,6 +86,9 @@ libraryDependencies ++= Seq(
   // よく分からんけど Reactive Streams というのにも標準対応するらしい
   // https://github.com/scalikejdbc/scalikejdbc/blob/master/notes/3.0.0.markdown
   "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.5.1",
+  // scalikejdbc で ZonedDateTime を使うためのライブラリ
+  // https://github.com/scalikejdbc/scalikejdbc-cookbook/blob/master/ja/06_samples.md#joda-time-ではなく-java-se-8-の-date-time-api-を使う
+  "org.scalikejdbc" %% "scalikejdbc-jsr310" % "2.5.2",
   // play-cache ってのインポートしてるっぽい
   // キャッシュ絡みのなにかということしか分からない（何のキャッシュだよ。。）
   cache,
