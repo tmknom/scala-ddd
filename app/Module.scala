@@ -46,11 +46,13 @@ class Module extends AbstractModule {
   private def configureServices() = {
     bind(classOf[HatenaBookmarkService]).to(classOf[HatenaBookmarkServiceImpl])
     bind(classOf[ArticleService]).to(classOf[ArticleServiceImpl])
+    bind(classOf[TwitterService]).to(classOf[TwitterServiceImpl])
   }
 
   private def configureInfrastructures() = {
     bind(classOf[ArticleRepository]).to(classOf[ArticleRepositoryImpl])
     bind(classOf[HatenaBookmarkApi]).to(classOf[HatenaBookmarkApiImpl])
     bind(classOf[HatenaBookmarkParser]).to(classOf[HatenaBookmarkParserImpl])
+    bind(classOf[TwitterApi]).to(classOf[TwitterApiImpl])
   }
 }

@@ -1,0 +1,12 @@
+# direnv を使って設定する
+#
+# direnv は事前にインストールしておくこと。
+# .envrc ファイルは絶対にコミットしてはいけない（.gitignore にも設定済み）
+#
+# $ direnv edit .
+
+# Twitter API アクセス用のトークンの設定
+export TWITTER_CONSUMER_KEY='xxxx'
+export TWITTER_CONSUMER_SECRET='xxxx'
+export TWITTER_ACCESS_TOKEN='xxxx'
+export TWITTER_ACCESS_TOKEN_SECRET='xxxx'

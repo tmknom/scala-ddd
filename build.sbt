@@ -100,6 +100,10 @@ libraryDependencies ++= Seq(
   // Scala オブジェクトから JSON にいい感じに変換してくれる
   // http://arata.hatenadiary.com/entry/2015/02/11/015916
   "io.spray" %%  "spray-json" % "1.3.3",
+  // Twitter API Client
+  // Java で最もメジャーなライブラリっぽい
+  // https://github.com/yusuke/twitter4j
+  "org.twitter4j" % "twitter4j-core" % "4.0.4",
 
   // ちゃんと調べてないけど、こっから下はテスト用だと思われる
   //
