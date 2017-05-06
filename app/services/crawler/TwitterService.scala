@@ -2,8 +2,7 @@ package services.crawler
 
 import javax.inject.{Inject, Singleton}
 
-import domains.crawler.TwitterApi
-import domains.tweet.{TweetEntity, TweetRepository}
+import domains.tweet.{TweetEntity, TweetRepository, TwitterApi}
 
 trait TwitterService {
   def crawl(): Seq[TweetEntity]

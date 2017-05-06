@@ -1,11 +1,10 @@
-package infrastructures.crawler
+package infrastructures.tweet
 
 import java.time.{ZoneId, ZonedDateTime}
 import javax.inject.Singleton
 
 import com.typesafe.config.ConfigFactory
-import domains.crawler.TwitterApi
-import domains.tweet.TweetEntity
+import domains.tweet.{TweetEntity, TwitterApi}
 import play.api.Logger
 import twitter4j.conf.{Configuration, ConfigurationBuilder}
 import twitter4j.{Query, Status, TwitterFactory}
