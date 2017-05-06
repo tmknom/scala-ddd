@@ -2,20 +2,19 @@ package services.crawler
 
 import javax.inject.{Inject, Singleton}
 
-import domains.article.{ArticleEntity, ArticleRepository}
 import domains.crawler.TwitterApi
+import domains.tweet.TweetEntity
 
 trait TwitterService {
-  def crawl(): Seq[ArticleEntity]
+  def crawl(): Seq[TweetEntity]
 }
 
 @Singleton
 final class TwitterServiceImpl @Inject()(
-                                          api: TwitterApi,
-                                          articleRepository: ArticleRepository) extends TwitterService {
+                                          api: TwitterApi) extends TwitterService {
 
-  override def crawl(): Seq[ArticleEntity] = {
+  override def crawl(): Seq[TweetEntity] = {
     val response = api.request()
-    Seq.empty[ArticleEntity]
+    response
   }
 }
