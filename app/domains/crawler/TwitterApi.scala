@@ -1,5 +1,7 @@
 package domains.crawler
 
+import domains.tweet.TweetEntity
+
 trait TwitterApi {
-  def request(): String
+  def request(): Seq[TweetEntity]
 }
