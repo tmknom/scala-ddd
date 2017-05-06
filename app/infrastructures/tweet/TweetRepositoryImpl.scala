@@ -1,7 +1,5 @@
 package infrastructures.tweet
 
-import java.time.{ZoneId, ZonedDateTime}
-
 import domains.tweet.{TweetEntity, TweetRepository}
 import scalikejdbc._
 import scalikejdbc.jsr310._
