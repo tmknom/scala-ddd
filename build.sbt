@@ -24,7 +24,19 @@ scalaVersion := "2.11.11"
 // テスト用のFixtureファイルをロードできるように設定
 resourceDirectory in Test := baseDirectory.value / "test/resources"
 
-// テスト時に読み込むlogbackの設定を切り替え
+/**
+  * システムのタイムゾーンを指定
+  *
+  * scalikejdbc などの一部のライブラリでは、システムのタイムゾーンがそのまま使われるため
+  * JVM のタイムゾーンは明示的に指定したほうがよい気がする。
+  *
+  * @see https://github.com/scalikejdbc/scalikejdbc/blob/master/scalikejdbc-core/src/main/scala/scalikejdbc/UnixTimeInMillisConverter.scala#L26
+  */
+javaOptions += "-Duser.timezone=Asia/Tokyo"
+
+/**
+  * テスト時に読み込むlogbackの設定を切り替え
+  */
 javaOptions in Test += "-Dlogger.resource=logback-test.xml"
 
 /**
