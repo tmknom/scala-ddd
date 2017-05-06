@@ -3,8 +3,10 @@ import java.time.Clock
 import com.google.inject.AbstractModule
 import domains.article._
 import domains.crawler._
+import domains.tweet._
 import infrastructures.article._
 import infrastructures.crawler._
+import infrastructures.tweet._
 import services.article._
 import services.crawler._
 
@@ -53,6 +55,7 @@ class Module extends AbstractModule {
     bind(classOf[ArticleRepository]).to(classOf[ArticleRepositoryImpl])
     bind(classOf[HatenaBookmarkApi]).to(classOf[HatenaBookmarkApiImpl])
     bind(classOf[HatenaBookmarkParser]).to(classOf[HatenaBookmarkParserImpl])
+    bind(classOf[TweetRepository]).to(classOf[TweetRepositoryImpl])
     bind(classOf[TwitterApi]).to(classOf[TwitterApiImpl])
   }
 }
