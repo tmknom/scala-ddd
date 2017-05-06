@@ -28,6 +28,16 @@ resourceDirectory in Test := baseDirectory.value / "test/resources"
 javaOptions in Test += "-Dlogger.resource=logback-test.xml"
 
 /**
+  * ScalaTest のオプション設定
+  *
+  * -oD : テストケースごとに実行時間の表示
+  * -eI : 失敗したテストを最後にまとめて表示
+  *
+  * @see http://www.scalatest.org/user_guide/using_scalatest_with_sbt
+  */
+testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oD", "-eI")
+
+/**
   * fork して実行するよう設定
   *
   * これを書かないと Task 実行時に正常終了してくれない。
