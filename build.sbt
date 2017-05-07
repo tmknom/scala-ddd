@@ -86,7 +86,7 @@ libraryDependencies ++= Seq(
   //   Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
   //   [warn] c.z.h.u.DriverDataSource - Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
   // scalastyle:on
-  "mysql" % "mysql-connector-java" % "5.1.41",
+  "mysql" % "mysql-connector-java" % "5.1.42",
   // O/Rマッパー
   // http://skinny-framework.org/documentation/orm.html
   "org.skinny-framework" %% "skinny-orm" % "2.3.6",
