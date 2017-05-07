@@ -40,6 +40,14 @@ javaOptions += "-Duser.timezone=Asia/Tokyo"
 javaOptions in Test += "-Dlogger.resource=logback-test.xml"
 
 /**
+  * テスト用のダミーの環境変数をセット
+  */
+javaOptions in Test += "-DTWITTER_CONSUMER_KEY=dummy"
+javaOptions in Test += "-DTWITTER_CONSUMER_SECRET=dummy"
+javaOptions in Test += "-DTWITTER_ACCESS_TOKEN=dummy"
+javaOptions in Test += "-DTWITTER_ACCESS_TOKEN_SECRET=dummy"
+
+/**
   * ScalaTest のオプション設定
   *
   * -oD : テストケースごとに実行時間の表示
