@@ -1,27 +1,40 @@
 package infrastructures.tweet
 
 import java.time.{ZoneId, ZonedDateTime}
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
 
 import com.typesafe.config.ConfigFactory
 import domains.tweet.{TweetEntity, TwitterApi}
-import play.api.Logger
 import twitter4j.conf.{Configuration, ConfigurationBuilder}
-import twitter4j.{Query, Status, TwitterFactory}
+import twitter4j.{Query, Status, Twitter, TwitterFactory}
 
 import scala.collection.JavaConverters._
 
 @Singleton
-class TwitterApiImpl extends TwitterApi {
+class TwitterApiImpl @Inject()(twitterAdapter: TwitterAdapter) extends TwitterApi {
   override def request(): Seq[TweetEntity] = {
     val query = new Query("#funny")
     val statuses = search(query)
-
-    statuses.map(convertTweetEntity)
+    statuses.map(TweetEntityConverter.convert)
   }
 
-  private def convertTweetEntity(status: Status): TweetEntity = {
-    // logStatus(status)
+  private def search(query: Query): Seq[Status] = {
+    val twitter = TwitterClientFactory.create()
+    twitterAdapter.search(twitter, query)
+  }
+}
+
+trait TwitterAdapter {
+  def search(twitter: Twitter, query: Query): Seq[Status]
+}
+
+@Singleton
+class TwitterAdapterImpl extends TwitterAdapter {
+  def search(twitter: Twitter, query: Query): Seq[Status] = twitter.search(query).getTweets.asScala
+}
+
+private[tweet] object TweetEntityConverter {
+  def convert(status: Status): TweetEntity = {
     TweetEntity(
       None,
       status.getId,
@@ -33,16 +46,14 @@ class TwitterApiImpl extends TwitterApi {
       ZonedDateTime.ofInstant(status.getCreatedAt.toInstant, ZoneId.systemDefault())
     )
   }
+}
 
-  private def search(query: Query): Seq[Status] = {
-    twitterClient(configuration).search(query).getTweets.asScala
+private[tweet] object TwitterClientFactory {
+  def create(): Twitter = {
+    new TwitterFactory(configuration()).getInstance()
   }
 
-  private def twitterClient(configuration: Configuration) = {
-    new TwitterFactory(configuration).getInstance()
-  }
-
-  private def configuration: Configuration = {
+  private def configuration(): Configuration = {
     val config = ConfigFactory.load().getObject("twitter4j").toConfig
     val oauthConfig = config.getObject("oauth").toConfig
 
@@ -53,22 +64,5 @@ class TwitterApiImpl extends TwitterApi {
       .setOAuthAccessToken(oauthConfig.getString("accessToken"))
       .setOAuthAccessTokenSecret(oauthConfig.getString("accessTokenSecret"))
       .build()
-  }
-
-  private def logStatus(status: Status): Unit = {
-    Logger.warn(s"getId=${status.getId}")
-    Logger.warn(s"getText=${status.getText}")
-    Logger.warn(s"getCreatedAt=${status.getCreatedAt}")
-    Logger.warn(s"getRetweetCount=${status.getRetweetCount}")
-    Logger.warn(s"getFavoriteCount=${status.getFavoriteCount}")
-    Logger.warn(s"getUser.getScreenName=${status.getUser.getScreenName}")
-    //    Logger.warn(s"isRetweeted=${status.isRetweeted}")
-    //    Logger.warn(s"getMediaEntities=${status.getMediaEntities.head.toString}")
-    //    Logger.warn(s"getSource=${status.getUserMentionEntities.head.toString}")
-    //    Logger.warn(s"getSource=${status.getHashtagEntities.head.toString}")
-    //    Logger.warn(s"getUser=${status.getUser.toString}")
-    //    Logger.warn(s"getMediaEntities.length=${status.getMediaEntities.length}")
-    //    Logger.warn(s"getUserMentionEntities.length=${status.getUserMentionEntities.length}")
-    //    Logger.warn(s"getMediaEntities.length=${status.getMediaEntities.length}")
   }
 }
