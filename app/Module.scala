@@ -57,5 +57,6 @@ class Module extends AbstractModule {
     bind(classOf[HatenaBookmarkParser]).to(classOf[HatenaBookmarkParserImpl])
     bind(classOf[TweetRepository]).to(classOf[TweetRepositoryImpl])
     bind(classOf[TwitterApi]).to(classOf[TwitterApiImpl])
+    bind(classOf[TwitterAdapter]).to(classOf[TwitterAdapterImpl])
   }
 }
