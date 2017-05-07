@@ -53,6 +53,10 @@ class TweetApiImplSpec extends PlaySpec with MockitoSugar {
 
     def getText: String = ""
 
+    def getDisplayTextRangeStart: Int = 0
+
+    def getDisplayTextRangeEnd: Int = 0
+
     def getSource: String = ""
 
     def isTruncated: Boolean = true
@@ -122,6 +126,8 @@ class TweetApiImplSpec extends PlaySpec with MockitoSugar {
     def getId: Long = 0
 
     def getName: String = ""
+
+    def getEmail: String = ""
 
     def getScreenName: String = ""
 
