@@ -259,6 +259,11 @@ wartremoverExcluded ++= routes.in(Compile).value
 wartremoverErrors in(Test, test) ++= Warts.allBut(Wart.Overloading, Wart.OptionPartial)
 
 /**
+  * Scapegoat のバージョンを指定
+  */
+scapegoatVersion := "1.3.0"
+
+/**
   * Scapegoat で除外する対象
   */
 scapegoatIgnoredFiles := Seq(
