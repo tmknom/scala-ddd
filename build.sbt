@@ -126,7 +126,7 @@ libraryDependencies ++= Seq(
   // Twitter API Client
   // Java で最もメジャーなライブラリっぽい
   // https://github.com/yusuke/twitter4j
-  "org.twitter4j" % "twitter4j-core" % "4.0.4",
+  "org.twitter4j" % "twitter4j-core" % "4.0.6",
 
   // ちゃんと調べてないけど、こっから下はテスト用だと思われる
   //
