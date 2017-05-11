@@ -2,9 +2,8 @@ package domains.article
 
 import spray.json._
 
-@SuppressWarnings(Array("org.wartremover.warts.DefaultArguments"))
 final case class ArticleEntity(
-                                id: Option[Int] = None,
+                                id: Option[Int],
                                 title: String,
                                 url: String
                               )

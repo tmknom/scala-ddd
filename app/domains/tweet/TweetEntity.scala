@@ -5,9 +5,8 @@ import java.time.ZonedDateTime
 import cores.spray.ZonedDateTimeImplicits._
 import spray.json._
 
-@SuppressWarnings(Array("org.wartremover.warts.DefaultArguments"))
 final case class TweetEntity(
-                              id: Option[Int] = None,
+                              id: Option[Int],
                               originId: Long,
                               userScreenName: String,
                               text: String,
