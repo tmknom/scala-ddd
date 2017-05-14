@@ -65,9 +65,9 @@ jobs:
           name: Test
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              activator clean coverage test coverageReport codacyCoverage coveralls
+              sbt clean coverage test coverageReport codacyCoverage coveralls
             else
-              activator coverage test
+              sbt coverage test
             fi
       - run:
           # ライン数などを取得
@@ -76,31 +76,31 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               mkdir -p target/analysis/
-              activator -no-colors "stats" > target/analysis/statistics.txt
+              sbt -no-colors "stats" > target/analysis/statistics.txt
             fi
       - run:
           name: CPD
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              activator "cpd"
+              sbt "cpd"
             fi
       - run:
           name: Scapegoat
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              activator "scapegoat"
+              sbt "scapegoat"
             fi
       - run:
           name: Dependency updates
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              activator "dependencyUpdates"
+              sbt "dependencyUpdates"
             fi
       - run:
           name: Scaladoc
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              activator "doc"
+              sbt "doc"
             fi
       - save_cache:
           name: Saving cache - sbt
