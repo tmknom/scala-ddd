@@ -3,7 +3,8 @@ package cores.filter
 import javax.inject.{Inject, Singleton}
 
 import akka.stream.Materializer
-import cores.internal.constant.{MdcKey, RequestHeaderTagName}
+import cores.internal.constant.MdcKey
+import cores.internal.request.RequestIdStore
 import org.slf4j.MDC
 import play.api.mvc.{Filter, RequestHeader, Result}
 
@@ -19,7 +20,7 @@ final class MDCFilter @Inject()(implicit override val mat: Materializer,
   def apply(nextFilter: RequestHeader => Future[Result])
            (requestHeader: RequestHeader): Future[Result] = {
 
-    MDC.put(MdcKey.RequestId, requestHeader.tags(RequestHeaderTagName.RequestId))
+    MDC.put(MdcKey.RequestId, RequestIdStore.extract(requestHeader).value)
 
     nextFilter(requestHeader).map { result =>
       // MDCは内部的にスレッドローカルを使って実装されている
