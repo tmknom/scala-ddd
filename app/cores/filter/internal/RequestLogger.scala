@@ -1,6 +1,6 @@
 package cores.filter.internal
 
-import cores.internal.constant.RequestHeaderTagName
+import cores.internal.request.RequestIdStore
 import play.api.Logger
 import play.api.libs.json.Json
 import play.api.mvc.{RequestHeader, Result}
@@ -39,7 +39,7 @@ private[filter] object RequestLogger {
   private def createStartLog(requestHeader: RequestHeader): String = {
     Json.obj(
       "startRequest" -> Json.obj(
-        "requestId" -> requestHeader.tags(RequestHeaderTagName.RequestId),
+        "requestId" -> RequestIdStore.extract(requestHeader).value,
         "method" -> requestHeader.method,
         "path" -> requestHeader.path,
         "rawQueryString" -> requestHeader.rawQueryString,
@@ -61,7 +61,7 @@ private[filter] object RequestLogger {
   private def createEndLog(requestHeader: RequestHeader, result: Result, requestTime: RequestTime): String = {
     Json.obj(
       "endRequest" -> Json.obj(
-        "requestId" -> requestHeader.tags(RequestHeaderTagName.RequestId),
+        "requestId" -> RequestIdStore.extract(requestHeader).value,
         "requestTimeMillis" -> requestTime.value,
         "httpStatus" -> result.header.status
       )

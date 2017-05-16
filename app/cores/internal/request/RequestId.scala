@@ -17,13 +17,22 @@ private[cores] sealed trait RequestId {
   */
 private[cores] object RequestId {
   /**
+    * リクエストIDのインスタンス生成
+    *
+    * @return リクエストID
+    */
+  def apply(value: String): RequestId = {
+    RequestIdImpl(value)
+  }
+
+  /**
     * リクエストIDの初期化
     *
     * @return リクエストID
     */
   def initialize(): RequestId = {
     val value = UUID.randomUUID().toString
-    RequestIdImpl(value)
+    apply(value)
   }
 }
 
