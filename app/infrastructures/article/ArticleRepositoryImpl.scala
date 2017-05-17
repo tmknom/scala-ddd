@@ -17,6 +17,10 @@ class ArticleRepositoryImpl extends SkinnyCRUDMapper[ArticleEntity] with Article
 
   override def listAll(): Seq[ArticleEntity] = findAll()
 
+  override def search(query: String): Seq[ArticleEntity] = {
+    where(sqls.like(a.url, LikeConditionEscapeUtil.contains(query))).apply()
+  }
+
   override def insert(articleEntity: ArticleEntity): Long = createWithNamedValues(
     column.title -> articleEntity.title,
     column.url -> articleEntity.url
