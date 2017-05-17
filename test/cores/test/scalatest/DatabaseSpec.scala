@@ -16,7 +16,7 @@ import scala.util.control.Exception._
   *  ・スローテスト問題に結構早くぶち当たる
   *
   * こうしたい
-  *  ・activator test コマンド実行時
+  *  ・sbt test コマンド実行時
   *  　・create table：テスト起動前に、一回だけ実行する
   *  　・drop table：すべてのテスト実行終了後、一回だけ実行する
   *  ・参照系のみの場合

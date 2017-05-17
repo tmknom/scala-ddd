@@ -8,7 +8,6 @@ version := "1.0-SNAPSHOT"
 
 // ビルド定義というらしい
 // サブプロジェクトとか作るときなどに色々弄るっぽい
-// あまり知見がないので、最初は activator さんが吐き出したまま使おう
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .enablePlugins(CopyPasteDetector)
@@ -210,15 +209,15 @@ coverageMinimum := 60
   *
   * テストコードもプロダクトコード同様の品質にすべきである。
   *
-  * 標準ではテストコードをチェックする場合 activator test:scalastyle を叩くことになるが、
-  * この設定を入れることで activator scalastyle を叩いたときも、テストコードをチェックしてくれる。
+  * 標準ではテストコードをチェックする場合 sbt test:scalastyle を叩くことになるが、
+  * この設定を入れることで sbt scalastyle を叩いたときも、テストコードをチェックしてくれる。
   */
 scalastyleSources in Compile <++= sourceDirectories in Test
 
 /**
   * テスト時もついでに Scalastyle を実行するよう設定
   *
-  * activator scalastyle コマンドを実行した場合は compile 用の設定が読み込まれる。
+  * sbt scalastyle コマンドを実行した場合は compile 用の設定が読み込まれる。
   * 同様の設定をテスト時のチェックにも使いまわしたいのでCompileを指定している。
   */
 lazy val testScalastyle = taskKey[Unit]("testScalastyle")
