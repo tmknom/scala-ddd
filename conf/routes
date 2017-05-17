@@ -4,6 +4,7 @@
 
 # 記事表示系
 GET /articles controllers.article.ArticleController.index
+GET /articles/search controllers.article.ArticleController.search(query: String)
 
 # 必ずエラーが発生する
 GET /error cores.controller.ErrorController.index

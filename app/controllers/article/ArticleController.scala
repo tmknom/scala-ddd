@@ -16,4 +16,9 @@ class ArticleController @Inject()(articleService: ArticleService) extends Contro
     val articleEntities: Seq[ArticleEntity] = articleService.listAll()
     Ok(articleEntities.toJson.prettyPrint)
   }
+
+  def search(query: String): Action[AnyContent] = TraceableAction {
+    val articleEntities: Seq[ArticleEntity] = articleService.search(query)
+    Ok(articleEntities.toJson.prettyPrint)
+  }
 }
