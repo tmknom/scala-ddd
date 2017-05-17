@@ -27,4 +27,17 @@ private[error_handler] object ErrorRenderer {
       "request_id" -> requestId.value
     )
   }
+
+  def render(message: String, statusCode: Int, requestId: RequestId): JsObject = {
+    Json.obj(
+      "errors" -> Json.arr(
+        Json.obj(
+          "code" -> "ClientError",
+          "message" -> message
+        )
+      ),
+      "status_code" -> statusCode,
+      "request_id" -> requestId.value
+    )
+  }
 }

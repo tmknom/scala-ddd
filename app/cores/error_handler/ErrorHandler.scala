@@ -6,9 +6,9 @@ import cores.error_handler.internal.{ErrorLogger, ErrorNotification, ErrorRender
 import cores.internal.request.RequestIdStore
 import play.api._
 import play.api.http.DefaultHttpErrorHandler
-import play.api.http.Status.INTERNAL_SERVER_ERROR
+import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR}
 import play.api.mvc.Results.InternalServerError
-import play.api.mvc.{RequestHeader, Result}
+import play.api.mvc.{RequestHeader, Result, Results}
 import play.api.routing.Router
 
 import scala.concurrent.Future
@@ -39,6 +39,43 @@ final class ErrorHandler @Inject()(
                                     sourceMapper: OptionalSourceMapper,
                                     router: Provider[Router]
                                   ) extends DefaultHttpErrorHandler(env, config, sourceMapper, router) {
+
+  /**
+    * クライアントエラーが発生したときに実行
+    *
+    * @param request    リクエストヘッダー
+    * @param statusCode HTTPステータスコード
+    * @param message    エラーメッセージ
+    */
+  override def onClientError(request: RequestHeader, statusCode: Int, message: String): Future[Result] = {
+    statusCode match {
+      case BAD_REQUEST =>
+        badRequest(request, message)
+      case clientErrorStatusCode if statusCode >= BAD_REQUEST && statusCode < INTERNAL_SERVER_ERROR =>
+        clientError(request, message, clientErrorStatusCode)
+      case _ =>
+        throw new IllegalArgumentException(s"onClientError invoked with non client error status code $statusCode: $message")
+    }
+  }
+
+  // 必須パラメータエラーか判定するための文字列
+  // play のエラーメッセージを直接解析するのは微妙だが、他に手段がないため仕方ない
+  // https://github.com/playframework/playframework/blob/master/framework/src/play/src/main/scala/play/core/routing/GeneratedRouter.scala
+  private val MissingParameterMessage = "Missing parameter:"
+
+  private def badRequest(requestHeader: RequestHeader, message: String): Future[Result] = {
+    // 必須パラメータがない場合、バリデーションエラーとして処理するため、例外をスローし直す
+    if (message.contains(MissingParameterMessage)) {
+      throw new RuntimeException(message)
+    }
+    clientError(requestHeader, message, BAD_REQUEST)
+  }
+
+  private def clientError(request: RequestHeader, message: String, statusCode: Int): Future[Result] = {
+    val requestId = RequestIdStore.extract(request)
+    val body = ErrorRenderer.render(message, statusCode, requestId)
+    Future.successful(Results.Status(statusCode)(body))
+  }
 
   /**
     * 本番環境でサーバーエラーが発生したときに実行
