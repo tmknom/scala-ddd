@@ -9,7 +9,7 @@ import spray.json._
 /**
   * Twitter クロールタスク
   *
-  * activator "runf-main tasks.CrawlTwitterTask"
+  * sbt "runf-main tasks.CrawlTwitterTask"
   */
 object CrawlTwitterTask extends Task {
   override def execute(app: Application): Unit = {

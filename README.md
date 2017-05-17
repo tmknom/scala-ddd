@@ -14,7 +14,7 @@ ScalaでDDDを実践するよ！
 ## Requirement
 
 * Java8
-* Activator
+* sbt
 
 
 ## Usage
@@ -22,55 +22,55 @@ ScalaでDDDを実践するよ！
 ### コンパイル
 
 ```bash
-activator compile
+sbt compile
 ```
 
 ### テスト
 
 ```bash
-activator test
+sbt test
 ```
 
 ### カバレッジの生成
 
 ```bash
-activator clean coverage test coverageReport
+sbt clean coverage test coverageReport
 ```
 
 ### 静的解析：Scalastyle
 
 ```bash
-activator scalastyle
+sbt scalastyle
 ```
 
 ### 静的解析：Scapegoat
 
 ```bash
-activator scapegoat
+sbt scapegoat
 ```
 
 ### コピペチェック
 
 ```bash
-activator cpd
+sbt cpd
 ```
 
 ### 依存ライブラリのアップデートチェック
 
 ```bash
-activator dependencyUpdates
+sbt dependencyUpdates
 ```
 
 ### 依存ライブラリの脆弱性チェック
 
 ```bash
-activator dependencyCheck
+sbt dependencyCheck
 ```
 
 ### コードの統計情報取得
 
 ```bash
-activator stats
+sbt stats
 ```
 
 ### 依存関係のグラフの画像出力
@@ -78,7 +78,7 @@ activator stats
 [graphviz](http://www.graphviz.org/) 必須。
 
 ```bash
-activator dependencyDot
+sbt dependencyDot
 dot -Kdot -Tpng target/dependencies-compile.dot -o target/dependencies-compile.png
 ```
 
@@ -87,5 +87,5 @@ dot -Kdot -Tpng target/dependencies-compile.dot -o target/dependencies-compile.p
 
 ```bash
 git clone git@github.com:tmknom/scala-ddd.git && cd scala-ddd
-activator compile
+sbt compile
 ```

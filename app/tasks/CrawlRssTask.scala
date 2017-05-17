@@ -9,7 +9,7 @@ import spray.json._
 /**
   * RSS クロールタスク
   *
-  * activator "run-main tasks.CrawlRssTask"
+  * sbt "run-main tasks.CrawlRssTask"
   */
 object CrawlRssTask extends Task {
   override def execute(app: Application): Unit = {
