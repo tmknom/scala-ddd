@@ -3,6 +3,7 @@ package cores.error_handler
 import javax.inject.{Inject, Provider, Singleton}
 
 import cores.error_handler.internal.{ErrorLogger, ErrorNotification, ErrorRenderer}
+import cores.internal.request.RequestIdStore
 import play.api._
 import play.api.http.DefaultHttpErrorHandler
 import play.api.http.Status.INTERNAL_SERVER_ERROR
@@ -46,9 +47,11 @@ final class ErrorHandler @Inject()(
     * @param exception スローされた例外
     */
   override protected def onProdServerError(request: RequestHeader, exception: UsefulException): Future[Result] = {
+    val requestId = RequestIdStore.extract(request)
+
     ErrorNotification.notify(request, exception)
     Future.successful(InternalServerError(
-      ErrorRenderer.render(exception, INTERNAL_SERVER_ERROR)
+      ErrorRenderer.render(exception, INTERNAL_SERVER_ERROR, requestId)
     ))
   }
 
