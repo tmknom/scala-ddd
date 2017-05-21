@@ -126,24 +126,6 @@ testScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Compile).toT
 (test in Test) <<= (test in Test) dependsOn testScalastyle
 
 /**
-  * CMD によるコピペチェックの設定
-  *
-  * これを入れないと、全部コピペチェックに引っかかる。
-  * target ディレクトリも対象になっちゃってる？
-  */
-cpdSkipDuplicateFiles := true
-
-/**
-  * ここで設定した単語数以上が重複していたら、コピペチェックで引っかける
-  *
-  * デフォルトでは 100 と、やや大きめなので、少し小さめの値をセットする。
-  *
-  * @see https://github.com/sbt/cpd4sbt/blob/master/src/main/scala/de/johoop/cpd4sbt/Settings.scala#L33
-  */
-cpdMinimumTokens := 30
-
-
-/**
   * sbt-updates の依存ライブラリアップデートチェックの対象外を設定
   *
   * dependencyUpdatesExclusions は非推奨になったから代わりに

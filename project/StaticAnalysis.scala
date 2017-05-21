@@ -7,7 +7,7 @@ import sbt._
 
 // noinspection TypeAnnotation
 object StaticAnalysis {
-  val Settings = WartRemover.Settings ++ Scapegoat.Settings
+  val Settings = WartRemover.Settings ++ Scapegoat.Settings ++ CPD.Settings
 
   object WartRemover {
 
@@ -78,6 +78,30 @@ object StaticAnalysis {
         *   - RedundantFinalModifierOnCaseClass : WartRemoverとぶつかるうえcase classの継承を許可するのが望ましいとは思えないので除外
         */
       scapegoatDisabledInspections := Seq("RedundantFinalModifierOnCaseClass")
+    )
+  }
+
+  object CPD {
+
+    import de.johoop.cpd4sbt.CopyPasteDetector.autoImport._
+
+    val Settings = Seq(
+      /**
+        * CPD によるコピペチェックの設定
+        *
+        * これを入れないと、全部コピペチェックに引っかかる。
+        * target ディレクトリも対象になっちゃってる？
+        */
+      cpdSkipDuplicateFiles := true,
+
+      /**
+        * ここで設定した単語数以上が重複していたら、コピペチェックで引っかける
+        *
+        * デフォルトでは 100 と、やや大きめなので、少し小さめの値をセットする。
+        *
+        * @see https://github.com/sbt/cpd4sbt/blob/master/src/main/scala/de/johoop/cpd4sbt/Settings.scala#L33
+        */
+      cpdMinimumTokens := 30
     )
   }
 
