@@ -306,7 +306,9 @@ cpdMinimumTokens := 30
   *
   * @see https://github.com/rtimush/sbt-updates#exclusions
   */
-dependencyUpdatesExclusions := moduleFilter(organization = "org.scala-lang")
+dependencyUpdatesExclusions := moduleFilter(organization = "org.scala-lang") |
+  moduleFilter(name = "twirl-api") | // play のバージョンに依存しているので除外
+  moduleFilter(name = "pmd-dist") // cpd はライブラリが更新されてないので除外
 
 /**
   * sbt-updates の依存ライブラリアップデートチェック時に、アップデートすべきものがあればエラーにする
