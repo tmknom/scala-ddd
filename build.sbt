@@ -88,7 +88,7 @@ libraryDependencies ++= Seq(
   "mysql" % "mysql-connector-java" % "5.1.42",
   // O/Rマッパー
   // http://skinny-framework.org/documentation/orm.html
-  "org.skinny-framework" %% "skinny-orm" % "2.3.6",
+  "org.skinny-framework" %% "skinny-orm" % "2.3.7",
   // コネクションプールの作成に必要
   //
   // Skinny-ORM は内部的に ScalikeJDBC を使っており、コネクションプールを初期化する必要がある
@@ -131,7 +131,7 @@ libraryDependencies ++= Seq(
   //
   // モック用ライブラリ
   // DBアクセスやネットワークアクセスを差し替えたい時に使う
-  "org.mockito" % "mockito-core" % "2.7.22" % Test,
+  "org.mockito" % "mockito-core" % "2.8.9" % Test,
   // xUnit用ライブラリ
   // playの標準テストライブラリなので、そのまま採用する
   "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0" % Test
