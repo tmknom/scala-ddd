@@ -131,7 +131,7 @@ libraryDependencies ++= Seq(
   //
   // モック用ライブラリ
   // DBアクセスやネットワークアクセスを差し替えたい時に使う
-  "org.mockito" % "mockito-core" % "2.7.22" % Test,
+  "org.mockito" % "mockito-core" % "2.8.9" % Test,
   // xUnit用ライブラリ
   // playの標準テストライブラリなので、そのまま採用する
   "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0" % Test
