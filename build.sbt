@@ -6,15 +6,26 @@ name := """scala-ddd"""
 // 普段は書き換えることなさそう
 version := "1.0-SNAPSHOT"
 
+lazy val commonSettings = Seq(
+  scalaVersion := "2.11.11"
+)
+
+lazy val library = (project in file("library"))
+  .settings(commonSettings)
+  .settings(scalastyleSettings)
+  .settings(libraryDependencies ++= Seq(
+    "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0" % Test
+  ))
+
+
 // ビルド定義というらしい
 // サブプロジェクトとか作るときなどに色々弄るっぽい
 lazy val root = (project in file("."))
+  .settings(commonSettings)
+  .aggregate(library)
+  .dependsOn(library)
   .enablePlugins(PlayScala)
   .enablePlugins(CopyPasteDetector)
-
-// Scalaのバージョン
-// たまにはアップデートしてあげたい
-scalaVersion := "2.11.11"
 
 // リソースファイルのパスの設定
 // デフォルトでは、src/test/resourcesが設定されているが変更する
@@ -212,7 +223,9 @@ coverageMinimum := 60
   * 標準ではテストコードをチェックする場合 sbt test:scalastyle を叩くことになるが、
   * この設定を入れることで sbt scalastyle を叩いたときも、テストコードをチェックしてくれる。
   */
-scalastyleSources in Compile <++= sourceDirectories in Test
+lazy val scalastyleSettings = Seq(
+  scalastyleSources in Compile <++= sourceDirectories in Test
+)
 
 /**
   * テスト時もついでに Scalastyle を実行するよう設定
