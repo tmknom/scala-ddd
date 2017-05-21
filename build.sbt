@@ -66,76 +66,7 @@ testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oD", "-eI")
 fork in (Compile, run) := true
 
 // 依存ライブラリ
-// 定期的にバージョンアップしたい
-libraryDependencies ++= Seq(
-  // DB接続用でおなじみ
-  jdbc,
-  // DBマイグレーション
-  evolutions,
-  // MySQLで接続するのに必要だぞ！
-  // 一度6.0.6にバージョンを上げてみたが、警告が出るようになったため、5系の最新版にしておく
-  //
-  // play が com.mysql.jdbc.Driver を使っているためこのような警告が出ると推測されるが
-  // 今後 play がバージョンアップを重ねていけば、そのうち com.mysql.cj.jdbc.Driver になる気がする
-  //
-  // jdbc については、一応 play 推奨のバージョンでいきたいので、一旦5系のままでいくことにする
-  //
-  // scalastyle:off
-  // 6.0.6のときに出力された警告
-  //   Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
-  //   [warn] c.z.h.u.DriverDataSource - Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
-  // scalastyle:on
-  "mysql" % "mysql-connector-java" % "5.1.42",
-  // O/Rマッパー
-  // http://skinny-framework.org/documentation/orm.html
-  "org.skinny-framework" %% "skinny-orm" % "2.3.7",
-  // コネクションプールの作成に必要
-  //
-  // Skinny-ORM は内部的に ScalikeJDBC を使っており、コネクションプールを初期化する必要がある
-  // そのコネクションプールの初期化を担ってくれるようだ
-  //
-  // なお application.conf に下記記述が必要
-  // play.modules.enabled += "scalikejdbc.PlayModule"
-  //
-  // 余談だが、ScalikeJDBC 自体は日本人が開発しているようで、日本語ドキュメントが開発者によって公開されている
-  // https://github.com/scalikejdbc/scalikejdbc-cookbook/tree/master/ja
-  //
-  // また ScalikeJDBC は近々メジャーバージョンアップが予定されているもよう
-  // サポート対象をJava8以上のみとして、JSR-310（ZonedDateTimeとか）にデフォルトで対応するらしい
-  // よく分からんけど Reactive Streams というのにも標準対応するらしい
-  // https://github.com/scalikejdbc/scalikejdbc/blob/master/notes/3.0.0.markdown
-  "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.5.1",
-  // scalikejdbc で ZonedDateTime を使うためのライブラリ
-  // https://github.com/scalikejdbc/scalikejdbc-cookbook/blob/master/ja/06_samples.md#joda-time-ではなく-java-se-8-の-date-time-api-を使う
-  "org.scalikejdbc" %% "scalikejdbc-jsr310" % "2.5.2",
-  // play-cache ってのインポートしてるっぽい
-  // キャッシュ絡みのなにかということしか分からない（何のキャッシュだよ。。）
-  cache,
-  // websocketライブラリ
-  // 我々にはいらないのでは疑惑がある
-  ws,
-  // HTTP通信用ライブラリ
-  // wsよりコッチを使うほうが推奨されているっぽい
-  // http://qiita.com/bigwheel/items/44cb874ced4be204c09c
-  "net.databinder.dispatch" %% "dispatch-core" % "0.12.0",
-  // JSON変換用ライブラリ
-  // Scala オブジェクトから JSON にいい感じに変換してくれる
-  // http://arata.hatenadiary.com/entry/2015/02/11/015916
-  "io.spray" %%  "spray-json" % "1.3.3",
-  // Twitter API Client
-  // Java で最もメジャーなライブラリっぽい
-  // https://github.com/yusuke/twitter4j
-  "org.twitter4j" % "twitter4j-core" % "4.0.6",
-
-  // ちゃんと調べてないけど、こっから下はテスト用だと思われる
-  //
-  // モック用ライブラリ
-  // DBアクセスやネットワークアクセスを差し替えたい時に使う
-  "org.mockito" % "mockito-core" % "2.8.9" % Test,
-  // xUnit用ライブラリ
-  // playの標準テストライブラリなので、そのまま採用する
-  "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0" % Test
-)
+libraryDependencies ++= Dependencies.Application
 
 // コンパイル時にドキュメントを含めない
 // こうすると、コンパイルがちょっと高速になるかもしれない
