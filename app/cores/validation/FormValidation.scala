@@ -1,5 +1,6 @@
 package cores.validation
 
+import cores.internal.exception.ValidationException
 import play.api.data.Form
 import play.api.mvc.Request
 
@@ -12,7 +13,7 @@ object FormValidation {
     *
     * バリデーションエラーの場合は例外をスローする
     *
-    * @param form フォームオブジェクト
+    * @param form    フォームオブジェクト
     * @param request リクエスト
     * @tparam A フォームオブジェクトからマッピングするクラス
     * @return
@@ -20,7 +21,7 @@ object FormValidation {
   def validate[A](form: Form[A])(implicit request: Request[_]): A = {
     form.bindFromRequest.fold(
       formWithErrors => {
-        throw new RuntimeException(formWithErrors.errors.mkString)
+        throw new ValidationException(formWithErrors.errors)
       },
       validObject => validObject
     )

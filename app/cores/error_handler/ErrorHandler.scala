@@ -3,8 +3,10 @@ package cores.error_handler
 import javax.inject.{Inject, Provider, Singleton}
 
 import cores.error_handler.internal.{ErrorLogger, ErrorNotification, ErrorRenderer}
+import cores.internal.exception.ValidationException
 import cores.internal.request.RequestIdStore
 import play.api._
+import play.api.data.FormError
 import play.api.http.DefaultHttpErrorHandler
 import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR}
 import play.api.mvc.Results.InternalServerError
@@ -66,7 +68,7 @@ final class ErrorHandler @Inject()(
   private def badRequest(requestHeader: RequestHeader, message: String): Future[Result] = {
     // 必須パラメータがない場合、バリデーションエラーとして処理するため、例外をスローし直す
     if (message.contains(MissingParameterMessage)) {
-      throw new RuntimeException(message)
+      throw new ValidationException(Seq(FormError("missing", message)))
     }
     clientError(requestHeader, message, BAD_REQUEST)
   }
