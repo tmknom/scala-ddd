@@ -2,11 +2,12 @@
   * 静的解析
   */
 
-import sbt.Keys.{compile, test}
-import sbt.{Compile, Test}
+import sbt.Keys._
+import sbt._
 
+// noinspection TypeAnnotation
 object StaticAnalysis {
-  val Settings = WartRemover.Settings
+  val Settings = WartRemover.Settings ++ Scapegoat.Settings
 
   object WartRemover {
 
@@ -47,6 +48,36 @@ object StaticAnalysis {
         *   - 本当はコントローラのテストコードだけ指定とかできればよいが、そこは妥協することとした。
         */
       wartremoverErrors in(Test, test) ++= Warts.allBut(Wart.Overloading, Wart.OptionPartial)
+    )
+  }
+
+  object Scapegoat {
+
+    import com.sksamuel.scapegoat.sbt.ScapegoatSbtPlugin.autoImport._
+
+    val Settings = Seq(
+      /**
+        * Scapegoat のバージョンを指定
+        */
+      scapegoatVersion := "1.3.0",
+
+      /**
+        * Scapegoat で除外する対象
+        */
+      scapegoatIgnoredFiles := Seq(
+        ".*/Routes.scala",
+        ".*/JavaScriptReverseRoutes.scala",
+        ".*/RoutesPrefix.scala",
+        ".*/ReverseRoutes.scala"
+      ),
+
+      /**
+        * Scapegoat で除外する警告
+        *
+        * - 警告の除外設定
+        *   - RedundantFinalModifierOnCaseClass : WartRemoverとぶつかるうえcase classの継承を許可するのが望ましいとは思えないので除外
+        */
+      scapegoatDisabledInspections := Seq("RedundantFinalModifierOnCaseClass")
     )
   }
 
