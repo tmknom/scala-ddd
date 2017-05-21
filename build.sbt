@@ -12,6 +12,7 @@ lazy val commonSettings = Seq(
 
 lazy val library = (project in file("library"))
   .settings(commonSettings)
+  .settings(scalastyleSettings)
   .settings(libraryDependencies ++= Seq(
     "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0" % Test
   ))
@@ -222,7 +223,9 @@ coverageMinimum := 60
   * 標準ではテストコードをチェックする場合 sbt test:scalastyle を叩くことになるが、
   * この設定を入れることで sbt scalastyle を叩いたときも、テストコードをチェックしてくれる。
   */
-scalastyleSources in Compile <++= sourceDirectories in Test
+lazy val scalastyleSettings = Seq(
+  scalastyleSources in Compile <++= sourceDirectories in Test
+)
 
 /**
   * テスト時もついでに Scalastyle を実行するよう設定
