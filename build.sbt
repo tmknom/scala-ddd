@@ -36,6 +36,11 @@ resourceDirectory in Test := baseDirectory.value / "test/resources"
 javaOptions += "-Duser.timezone=Asia/Tokyo"
 
 /**
+  * logback で使用するサービス名：conf/logback.xmlで参照する値
+  */
+javaOptions += s"-Dlogback.service.name=${name.value}"
+
+/**
   * テスト時に読み込むlogbackの設定を切り替え
   */
 javaOptions in Test += "-Dlogger.resource=logback-test.xml"

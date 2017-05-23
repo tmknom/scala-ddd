@@ -1,8 +1,8 @@
 <!-- https://www.playframework.com/documentation/latest/SettingsLogger -->
 <configuration>
 
-  <!-- サービス名 -->
-  <property name="SERVICE_NAME" value="scala-ddd" />
+  <!-- サービス名を環境変数から取得 -->
+  <property name="SERVICE_NAME" value="${logback.service.name}" />
 
   <conversionRule conversionWord="coloredLevel" converterClass="play.api.libs.logback.ColoredLevel" />
 
