@@ -19,6 +19,9 @@ object Versions {
   // JSON関連
   val SprayJson = "1.3.3"
 
+  // ログ出力関連
+  val LogstashLogbackEncoder = "4.9"
+
   // テスト関連
   val MockitoCore = "2.8.9"
   val ScalatestplusPlay = "2.0.0"
@@ -82,6 +85,10 @@ object Libraries {
   // http://arata.hatenadiary.com/entry/2015/02/11/015916
   val SprayJson = "io.spray" %% "spray-json" % Versions.SprayJson
 
+  // logbackでjsonで出力
+  // https://github.com/logstash/logstash-logback-encoder
+  val LogstashLogbackEncoder = "net.logstash.logback" % "logstash-logback-encoder" % Versions.LogstashLogbackEncoder
+
   // モック用ライブラリ
   // DBアクセスやネットワークアクセスを差し替えたい時に使う
   val MockitoCore = "org.mockito" % "mockito-core" % Versions.MockitoCore % Test
@@ -105,7 +112,8 @@ object Dependencies {
     ScalikejdbcPlayInitializer,
     ScalikejdbcJsr310,
     DispatchCore,
-    SprayJson
+    SprayJson,
+    LogstashLogbackEncoder
   )
 
   // テスト関連
