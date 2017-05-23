@@ -17,7 +17,7 @@ private[error_handler] object ErrorLogger {
     */
   def error(requestHeader: RequestHeader, throwable: Throwable): Unit = {
     val message = createMessage(requestHeader, throwable)
-    Logger.error(message, throwable)
+    Logger.logger.error(message)
   }
 
   /**

@@ -13,25 +13,19 @@
   </appender>
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-      <!-- false にすると application.home が出力されなくなる -->
-      <includeContext>false</includeContext>
-
-      <!-- マイクロサービス前提だと、サービス名も出力しておいたほうがいい気がする -->
-      <!-- HOSTNAMEはデフォルトで使えるらしいので、ついでに出力している -->
-      <customFields>{"service_name":"${SERVICE_NAME}","hostname":"${HOSTNAME:-}"}</customFields>
-
-      <!-- JSON のキー名を変更 -->
-      <fieldNames>
-        <!-- timestamp はデフォルトだと @timestamp になってしまうため明示的に指定 -->
-        <timestamp>timestamp</timestamp>
-        <!-- ログのバージョン情報を付与するフィールドだが、そこまで厳密な運用はしないと思うので除外 -->
-        <!-- ログのバージョン情報によって、集計処理などを切り替えられる可能性はあるので入れておいてもいい -->
-        <version>[ignore]</version>
-      </fieldNames>
-
-      <!-- タイムゾーンの指定：環境依存にしたくないので、明示的に指定する -->
-      <timeZone>Asia/Tokyo</timeZone>
+    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+      <providers class="cores.logback.PatchedLoggingEventPatternJsonProvider">
+        <timestamp />
+        <pattern>
+          <pattern>
+            {
+            "thread": "%thread",
+            "relative": "#asLong{%relative}",
+            "json_message": "#asJson{%message}"
+            }
+          </pattern>
+        </pattern>
+      </providers>
     </encoder>
   </appender>
 
